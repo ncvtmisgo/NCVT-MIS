@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ITI Student Record Verification</title>
+<style>
+:root{--navy:#12345a;--blue:#1764a5;--bg:#f2f5f9;--line:#dce4ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#1d2939;font:15px/1.5 Arial,sans-serif}
+.top{background:var(--navy);color:#fff;padding:22px 16px}.topin{max-width:980px;margin:auto;display:flex;align-items:center;gap:14px}
+.mark{width:48px;height:48px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-weight:bold}
+h1{font-size:22px;margin:0}.top p{margin:3px 0 0;color:#d8e7f7}
+main{max-width:980px;margin:28px auto;padding:0 16px}.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:18px;box-shadow:0 4px 18px #17324d0a}
+h2{font-size:19px;margin:0 0 12px;color:var(--navy)}label{display:block;font-weight:bold;margin:10px 0 6px}
+input{width:100%;padding:12px;border:1px solid #bac8d8;border-radius:7px;font-size:16px}
+button{margin-top:12px;background:var(--blue);color:#fff;border:0;border-radius:7px;padding:12px 18px;font-weight:bold;cursor:pointer}
+button:hover{filter:brightness(.94)}.hint,.muted{color:#667085;font-size:13px}.notice{background:#fff7e6;border-left:4px solid #e3a008;padding:12px;margin-top:16px;font-size:13px}
+.hidden{display:none}.profile{display:flex;gap:18px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:14px}
+.photo{width:105px;height:125px;object-fit:cover;border:1px solid var(--line);border-radius:7px;background:#eef2f6}
+.no-photo{display:grid;place-items:center;text-align:center;color:#667085;font-size:12px}
+.tag{display:inline-block;background:#e8f5ec;color:#17643a;padding:4px 10px;border-radius:20px;font-weight:bold;font-size:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}.item{padding:10px 0;border-bottom:1px solid #edf0f4}.item span{display:block;color:#667085;font-size:12px}.item strong{overflow-wrap:anywhere}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line)}th{background:#f3f6fa}
+footer{text-align:center;color:#667085;font-size:12px;padding:20px}
+a{color:#145d9a}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.profile{align-items:flex-start}.photo{width:85px;height:105px}}
+@media print{.search-card,footer,.notice{display:none}body{background:#fff}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin"><div class="mark">ITI</div><div><h1>Student Record Verification</h1><p>QR-linked ITI student record display</p></div></div></header>
+<main>
+<section class="card search-card">
+<h2>Verify Student Record</h2>
+<p class="muted">Open this page from the QR code on the certificate/marksheet, or enter the record ID below.</p>
+<form id="searchForm">
+<label for="recordId">Certificate / Record ID</label>
+<input id="recordId" placeholder="Example: DEMO-1001" autocomplete="off">
+<button type="submit">View Student Details</button>
+</form>
+<p class="hint">QR URL format: https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/?id=DEMO-1001</p>
+</section>
+<section id="result" class="card hidden" aria-live="polite"></section>
+<section class="card">
+<h2>Official NCVT / DGT verification</h2>
+<p>This is an independent GitHub Pages template. It does not connect to NCVT/DGT databases and does not certify that a record is genuine. For official verification, use the verification facility provided by the issuing authority.</p>
+<p><a href="https://dgt.skillindiadigital.gov.in/" target="_blank" rel="noopener">Visit DGT / Skill India Digital portal</a></p>
+</section>
+<div class="notice"><strong>Privacy:</strong> GitHub Pages content is public. Publish only student information that your institute is authorized to disclose. Never add Aadhaar number, home address, phone number, signatures, or other sensitive data.</div>
+</main>
+<footer>Independent demonstration portal · Not an official Government of India website</footer>
+<script>
+const resultBox=document.getElementById('result');
+const idInput=document.getElementById('recordId');
+function esc(v){return String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function showMessage(msg){resultBox.classList.remove('hidden');resultBox.textContent=msg;}
+function render(s){
+ const subjects=Array.isArray(s.subjects)?s.subjects:[];
+ const total=subjects.reduce((n,x)=>n+Number(x.marks||0),0);
+ const maximum=subjects.reduce((n,x)=>n+Number(x.max||0),0);
+ const photo=s.photo?`<img class="photo" src="${esc(s.photo)}" alt="Student photo">`:`<div class="photo no-photo">Student<br>Photo</div>`;
+ resultBox.innerHTML=`
+ <div class="profile">${photo}<div><div class="muted">TRAINEE / STUDENT DETAILS</div><h2>${esc(s.name)}</h2><span class="tag">${esc(s.result||'Record found')}</span></div></div>
+ <div class="grid">
+ ${field('Father Name',s.fatherName)}${field('Mother Name',s.motherName)}
+ ${field('Roll Number',s.rollNo)}${field('Registration Number',s.registrationNo)}
+ ${field('Institute Name',s.institute)}${field('Institute Code',s.instituteCode)}
+ ${field('Trade',s.trade)}${field('Session',s.session)}
+ ${field('Certificate Number',s.certificateNo)}${field('Record ID',s.id)}
+ </div>
+ <h2 style="margin-top:22px">Marks Details</h2>
+ <div style="overflow-x:auto"><table><thead><tr><th>Subject</th><th>Marks</th><th>Maximum</th></tr></thead>
+ <tbody>${subjects.map(x=>`<tr><td>${esc(x.name)}</td><td>${Number(x.marks||0)}</td><td>${Number(x.max||0)}</td></tr>`).join('')||'<tr><td colspan="3">Marks not provided</td></tr>'}</tbody>
+ <tfoot><tr><th>Total</th><th>${total}</th><th>${maximum}</th></tr></tfoot></table></div>
+ <p><strong>Result:</strong> ${esc(s.result)}</p>
+ <p class="muted">Issue date: ${esc(s.issueDate)}</p>
+ <p class="muted">This page displays data supplied in this project's students.json file; it is not official NCVT verification.</p>`;
+ resultBox.classList.remove('hidden');
+}
+function field(k,v){return `<div class="item"><span>${k}</span><strong>${esc(v)}</strong></div>`;}
+async function lookup(id){
+ if(!id){showMessage('Please enter a record ID.');return;}
+ try{
+  const response=await fetch('./students.json');
+  if(!response.ok)throw new Error('Could not load students.json');
+  const records=await response.json();
+  const student=records.find(x=>String(x.id).toLowerCase()===id.toLowerCase());
+  if(!student){showMessage('No record found for this ID. Please contact the issuing institute.');return;}
+  render(student);
+ }catch(e){showMessage('Unable to load records. Check that students.json is uploaded to the same GitHub repository.');}
+}
+document.getElementById('searchForm').addEventListener('submit',e=>{e.preventDefault();const id=idInput.value.trim();history.replaceState(null,'','?id='+encodeURIComponent(id));lookup(id);});
+const initialId=new URLSearchParams(location.search).get('id');
+if(initialId){idInput.value=initialId;lookup(initialId);}
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "DEMO-1001",
+    "name": "Demo Student",
+    "fatherName": "Demo Father",
+    "motherName": "Demo Mother",
+    "rollNo": "DEMO-ROLL-001",
+    "registrationNo": "DEMO-REG-001",
+    "institute": "Example ITI (replace with authorized institute name)",
+    "instituteCode": "DEMO-CODE",
+    "trade": "Electrician (sample)",
+    "session": "2025-2026",
+    "certificateNo": "DEMO-CERT-001",
+    "issueDate": "DD Month YYYY",
+    "result": "DEMO ONLY",
+    "photo": "",
+    "subjects": [
+      {
+        "name": "Trade Theory",
+        "marks": 75,
+        "max": 100
+      },
+      {
+        "name": "Workshop Calculation & Science",
+        "marks": 70,
+        "max": 100
+      },
+      {
+        "name": "Engineering Drawing",
+        "marks": 80,
+        "max": 100
+      },
+      {
+        "name": "Practical",
+        "marks": 85,
+        "max": 100
+      }
+    ]
+  }
+]
