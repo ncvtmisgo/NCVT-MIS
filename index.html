@@ -3,178 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITI Public Dashboard - Skill India Digital</title>
+    <title>ITI Certificate & QR Verification Portal</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- QR Code Generator Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         @media print {
             .no-print { display: none; }
         }
     </style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800">
+<body class="bg-gray-100 font-sans text-gray-800 min-h-screen flex flex-col justify-between">
 
-    <!-- Top Announcement Bar -->
-    <div class="bg-orange-500 text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center no-print">
-        <a href="#" class="hover:underline">
-            Click here to view CTS AITT Mains Examination-2026 Result &raquo;
-        </a>
-    </div>
+    <div>
+        <!-- Top Announcement Bar -->
+        <div class="bg-orange-500 text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center no-print">
+            <span>National Council for Vocational Training &bull; Digital Verification System</span>
+        </div>
 
-    <!-- Main Header -->
-    <header class="bg-white border-b border-gray-200 py-3 px-4 sm:px-8 shadow-sm no-print">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <!-- Logos Section -->
-            <div class="flex items-center space-x-4">
-                <div class="flex items-center space-x-2 border-r pr-4 border-gray-300">
-                    <span class="text-xs font-bold text-gray-600 uppercase">Govt of India</span>
-                </div>
-                <div class="flex items-center space-x-2">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 py-3 px-4 sm:px-8 shadow-sm no-print">
+            <div class="max-w-5xl mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-3">
                     <div class="bg-orange-500 text-white font-extrabold px-2.5 py-1 rounded text-sm tracking-widest">ITI</div>
                     <div>
-                        <span class="block font-bold text-blue-900 text-sm leading-none">Skill India</span>
-                        <span class="text-[10px] text-gray-500 tracking-wider uppercase">Directorate General of Training</span>
+                        <span class="block font-bold text-blue-900 text-sm leading-none">Skill India Digital</span>
+                        <span class="text-[10px] text-gray-500 uppercase">Verification Portal</span>
                     </div>
+                </div>
+                <div>
+                    <span id="mode-title" class="text-xs bg-blue-100 text-blue-800 font-semibold px-3 py-1 rounded-full">QR Generator Mode</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTAINER (Dynamically switches between Generator & Verification) -->
+        <main class="max-w-4xl mx-auto my-8 px-4">
+
+            <!-- VIEW 1: QR CODE GENERATOR FORM (Admin use) -->
+            <div id="generator-view" class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 sm:p-8">
+                <h1 class="text-xl font-bold text-blue-900 mb-2 border-b pb-2">Create Student QR Code & Verification Link</h1>
+                <p class="text-xs text-gray-500 mb-6">ਸਟੂਡੈਂਟ ਦੀ ਜਾਣਕਾਰੀ ਭਰੋ ਅਤੇ ਤੁਰੰਤ QR Code ਬਣਾਓ ਤਾਂ ਜੋ ਸਰਟੀਫਿਕੇਟ ਉੱਤੇ ਲਗਾਇਆ ਜਾ ਸਕੇ।</p>
+
+                <form id="qr-form" onsubmit="generateQRCodeLink(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Roll Number / PRN</label>
+                            <input type="text" id="gen-roll" value="R190803019761" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Trainee Name</label>
+                            <input type="text" id="gen-name" value="AJAY SINGH" class="w-full border rounded px-3 py-2 text-sm uppercase focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Father's Name</label>
+                            <input type="text" id="gen-father" value="MAJOR SINGH" class="w-full border rounded px-3 py-2 text-sm uppercase focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Trade Name</label>
+                            <input type="text" id="gen-trade" value="Electrician (NSQF)" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Date of Birth</label>
+                            <input type="text" id="gen-dob" value="03-Jun-2001" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">ITI Name</label>
+                            <input type="text" id="gen-iti" value="Baba Farid ITI, Guru Har Sahai" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Total Marks Obtained</label>
+                            <input type="text" id="gen-marks" value="588 / 700" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Result Status</label>
+                            <select id="gen-status" class="w-full border rounded px-3 py-2 text-sm bg-white">
+                                <option value="PASS">PASS</option>
+                                <option value="REAPPEAR">REAPPEAR</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded text-sm transition shadow mt-4">
+                        Generate QR Code & Link 🚀
+                    </button>
+                </form>
+
+                <!-- Output QR Result Section -->
+                <div id="qr-output-box" class="mt-8 pt-6 border-t border-gray-200 hidden text-center">
+                    <h3 class="font-bold text-gray-700 text-sm mb-3">Generated QR Code for Certificate:</h3>
+                    <div id="qrcode" class="inline-block p-3 bg-white border-2 border-gray-300 rounded shadow"></div>
+                    <div class="mt-4">
+                        <p class="text-xs text-gray-500 mb-1">Direct Verification Link:</p>
+                        <input type="text" id="generated-link" readonly class="w-full bg-gray-50 border rounded p-2 text-xs text-center text-blue-600 font-mono select-all">
+                    </div>
+                    <p class="text-xs text-green-600 font-semibold mt-3">✔ ਇਸ QR ਕੋਡ ਨੂੰ ਸਕ੍ਰੀਨਸ਼ਾਟ ਲੈ ਕੇ ਜਾਂ ਸੇਵ ਕਰਕੇ ਸਰਟੀਫਿਕੇਟ ਤੇ ਲਗਾ ਲਵो!</p>
                 </div>
             </div>
 
-            <!-- Header Action Buttons -->
-            <div class="flex flex-wrap items-center gap-2">
-                <a href="#" class="bg-orange-100 text-orange-800 border border-orange-300 text-xs font-semibold px-3 py-1.5 rounded">RESULT</a>
-                <a href="#" class="bg-gray-100 text-gray-700 border border-gray-300 text-xs font-semibold px-3 py-1.5 rounded">Instructor self registration on NIMS</a>
-                <a href="#" class="bg-orange-600 text-white text-xs font-bold px-5 py-1.5 rounded shadow">LOGIN</a>
-            </div>
-        </div>
-    </header>
 
-    <!-- Navigation Bar -->
-    <nav class="bg-white border-b border-gray-300 shadow-sm sticky top-0 z-50 no-print">
-        <div class="max-w-7xl mx-auto px-4">
-            <ul class="flex flex-wrap items-center justify-center md:justify-start space-x-1 sm:space-x-6 text-xs sm:text-sm font-semibold text-gray-700 py-2.5">
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1">GRIEVANCE ▼</a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1">DOWNLOAD ▼</a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1 text-orange-600 border-b-2 border-orange-600 pb-1">VERIFICATION ▼</a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1">IMPORTANT LINKS ▼</a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1">REGISTER AS EXAMINER</a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1">HELP & SUPPORT</a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1">PM-SETU ToT</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero Banner -->
-    <section class="relative bg-gray-900 overflow-hidden shadow-inner no-print">
-        <div class="absolute inset-0 opacity-40">
-            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&auto=format&fit=crop&q=80" alt="Convocation" class="w-full h-full object-cover">
-        </div>
-        <div class="relative max-w-7xl mx-auto py-16 sm:py-20 px-4 text-center text-white">
-            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Empowering India's Youth Through Skills</h1>
-            <p class="mt-2 text-sm text-gray-200">Welcome to the National Vocational Training Information Management & Verification Portal</p>
-        </div>
-    </section>
-
-    <!-- Dashboard Main Heading -->
-    <section class="max-w-7xl mx-auto my-8 px-4 text-center no-print">
-        <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 border-b-2 border-orange-500 inline-block pb-1">ITI Public Dashboard</h2>
-        <p class="text-xs text-gray-500 mt-2">Access trainee profiles, certificates, marksheets, and institution details</p>
-    </section>
-
-    <!-- Search & Verification Form -->
-    <main class="max-w-4xl mx-auto mb-16 px-4">
-        <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 sm:p-8">
-            <h3 class="text-lg font-bold text-gray-700 mb-4 border-b pb-2">Trainee Quick Verification</h3>
-            
-            <form id="verify-form" onsubmit="handleVerify(event)" class="space-y-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- VIEW 2: VERIFICATION & MARKSHEET VIEW (Shown when QR is scanned) -->
+            <div id="verification-view" class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 sm:p-8 hidden">
+                <div class="flex justify-between items-center pb-3 border-b border-gray-200 mb-6">
                     <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Registration / Roll Number</label>
-                        <input type="text" id="roll-input" value="R190803019761" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-orange-500" required>
+                        <h2 class="font-bold text-blue-900 text-lg">Trainee Profile & Marksheet</h2>
+                        <p class="text-xs text-gray-500">Official Server Authenticated Record</p>
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Select Search Type</label>
-                        <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-white">
-                            <option>Trainee Profile & Marksheet</option>
-                            <option>Certificate Verification</option>
-                        </select>
+                    <span class="bg-green-600 text-white text-xs px-3 py-1 rounded font-bold uppercase">Verified Success</span>
+                </div>
+
+                <!-- Profile Card -->
+                <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 bg-slate-50 p-4 rounded border mb-6">
+                    <div class="w-28 h-32 border-2 border-gray-300 p-1 bg-white shadow">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Photo" class="w-full h-full object-cover">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6 text-sm w-full">
+                        <div><span class="text-gray-500 text-xs block">Roll No / PRN:</span><strong id="val-roll" class="text-blue-900"></strong></div>
+                        <div><span class="text-gray-500 text-xs block">Trainee Name:</span><strong id="val-name" class="text-gray-900 uppercase"></strong></div>
+                        <div><span class="text-gray-500 text-xs block">Father's Name:</span><strong id="val-father" class="text-gray-900 uppercase"></strong></div>
+                        <div><span class="text-gray-500 text-xs block">Trade:</span><strong id="val-trade" class="text-gray-900"></strong></div>
+                        <div><span class="text-gray-500 text-xs block">Date of Birth:</span><strong id="val-dob" class="text-gray-900"></strong></div>
+                        <div><span class="text-gray-500 text-xs block">ITI Name:</span><strong id="val-iti" class="text-gray-900"></strong></div>
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-2.5 px-4 rounded text-sm transition shadow">
-                    Search & Verify Record
-                </button>
-            </form>
 
-            <!-- Result Profile & Marksheet Section (Hidden initially, appears on click) -->
-            <div id="result-box" class="mt-8 pt-6 border-t-2 border-gray-200 hidden">
-                <div class="bg-slate-50 border border-gray-300 rounded-lg p-6 shadow-inner">
-                    <div class="flex justify-between items-center pb-3 border-b border-gray-200 mb-4">
-                        <h4 class="font-bold text-blue-900 text-base">Trainee Profile & Marksheet Details</h4>
-                        <span class="bg-green-600 text-white text-xs px-3 py-1 rounded font-bold uppercase">Verified Success</span>
+                <!-- Marks Table -->
+                <h3 class="text-xs font-bold text-gray-700 uppercase mb-2">Examination Marks Details</h3>
+                <div class="overflow-x-auto mb-6">
+                    <table class="w-full text-left text-xs border border-gray-300 bg-white">
+                        <thead>
+                            <tr class="bg-blue-900 text-white">
+                                <th class="p-2.5 border">Subject Name</th>
+                                <th class="p-2.5 border text-center">Max Marks</th>
+                                <th class="p-2.5 border text-center">Min Marks</th>
+                                <th class="p-2.5 border text-center">Obtained Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="p-2 border">Trade Theory</td><td class="p-2 border text-center">100</td><td class="p-2 border text-center">33</td><td class="p-2 border text-center font-bold text-blue-900">82</td></tr>
+                            <tr class="bg-gray-50"><td class="p-2 border">Employability Skills</td><td class="p-2 border text-center">50</td><td class="p-2 border text-center">17</td><td class="p-2 border text-center font-bold text-blue-900">41</td></tr>
+                            <tr><td class="p-2 border">Workshop Calculation & Science</td><td class="p-2 border text-center">50</td><td class="p-2 border text-center">17</td><td class="p-2 border text-center font-bold text-blue-900">38</td></tr>
+                            <tr class="bg-gray-50"><td class="p-2 border">Engineering Drawing</td><td class="p-2 border text-center">50</td><td class="p-2 border text-center">17</td><td class="p-2 border text-center font-bold text-blue-900">42</td></tr>
+                            <tr><td class="p-2 border">Trade Practical</td><td class="p-2 border text-center">250</td><td class="p-2 border text-center">150</td><td class="p-2 border text-center font-bold text-blue-900">210</td></tr>
+                            <tr class="bg-gray-50"><td class="p-2 border">Formative Assessment</td><td class="p-2 border text-center">200</td><td class="p-2 border text-center">120</td><td class="p-2 border text-center font-bold text-blue-900">175</td></tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-slate-200 font-bold text-gray-900">
+                                <td class="p-2.5 border">Total Marks Obtained</td>
+                                <td class="p-2.5 border text-center">700</td>
+                                <td class="p-2.5 border text-center">-</td>
+                                <td id="val-marks" class="p-2.5 border text-center text-blue-900 text-sm"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <!-- Final Result & Print -->
+                <div class="bg-emerald-50 border-2 border-emerald-500 rounded p-4 flex flex-col sm:flex-row justify-between items-center">
+                    <div>
+                        <p class="text-xs text-gray-700">Verification Status: <strong class="text-emerald-700">Authenticated via Server</strong></p>
                     </div>
-
-                    <!-- Profile Info -->
-                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 bg-white p-4 rounded border">
-                        <div class="w-28 h-32 border-2 border-gray-300 p-1 bg-white shadow">
-                            <img id="val-photo" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Photo" class="w-full h-full object-cover">
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6 text-sm w-full">
-                            <div><span class="text-gray-500 text-xs block">Roll No:</span><strong id="val-roll" class="text-blue-900">R190803019761</strong></div>
-                            <div><span class="text-gray-500 text-xs block">Trainee Name:</span><strong id="val-name" class="text-gray-900 uppercase">AJAY SINGH</strong></div>
-                            <div><span class="text-gray-500 text-xs block">Father's Name:</span><strong id="val-father" class="text-gray-900 uppercase">MAJOR SINGH</strong></div>
-                            <div><span class="text-gray-500 text-xs block">Trade:</span><strong id="val-trade" class="text-gray-900">Electrician (NSQF)</strong></div>
-                            <div><span class="text-gray-500 text-xs block">Date of Birth:</span><strong id="val-dob" class="text-gray-900">03-Jun-2001</strong></div>
-                            <div><span class="text-gray-500 text-xs block">ITI Name:</span><strong id="val-iti" class="text-gray-900">Baba Farid ITI, Guru Har Sahai</strong></div>
-                        </div>
+                    <div class="mt-3 sm:mt-0 flex items-center space-x-3">
+                        <span id="val-status" class="bg-emerald-600 text-white font-extrabold px-6 py-1.5 rounded uppercase text-sm shadow"></span>
+                        <button onclick="window.print()" class="no-print bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded hover:bg-blue-800">🖨️ Print</button>
                     </div>
+                </div>
 
-                    <!-- Marks Table -->
-                    <div class="mt-6">
-                        <h5 class="text-xs font-bold text-gray-700 uppercase mb-2">Examination Marks Details</h5>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs border border-gray-300 bg-white">
-                                <thead>
-                                    <tr class="bg-blue-900 text-white">
-                                        <th class="p-2.5 border">Subject Name</th>
-                                        <th class="p-2.5 border text-center">Max Marks</th>
-                                        <th class="p-2.5 border text-center">Min Marks</th>
-                                        <th class="p-2.5 border text-center">Obtained Marks</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td class="p-2 border">Trade Theory</td><td class="p-2 border text-center">100</td><td class="p-2 border text-center">33</td><td class="p-2 border text-center font-bold text-blue-900">82</td></tr>
-                                    <tr class="bg-gray-50"><td class="p-2 border">Employability Skills</td><td class="p-2 border text-center">50</td><td class="p-2 border text-center">17</td><td class="p-2 border text-center font-bold text-blue-900">41</td></tr>
-                                    <tr><td class="p-2 border">Workshop Calculation & Science</td><td class="p-2 border text-center">50</td><td class="p-2 border text-center">17</td><td class="p-2 border text-center font-bold text-blue-900">38</td></tr>
-                                    <tr class="bg-gray-50"><td class="p-2 border">Engineering Drawing</td><td class="p-2 border text-center">50</td><td class="p-2 border text-center">17</td><td class="p-2 border text-center font-bold text-blue-900">42</td></tr>
-                                    <tr><td class="p-2 border">Trade Practical</td><td class="p-2 border text-center">250</td><td class="p-2 border text-center">150</td><td class="p-2 border text-center font-bold text-blue-900">210</td></tr>
-                                    <tr class="bg-gray-50"><td class="p-2 border">Formative Assessment</td><td class="p-2 border text-center">200</td><td class="p-2 border text-center">120</td><td class="p-2 border text-center font-bold text-blue-900">175</td></tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr class="bg-slate-200 font-bold text-gray-900">
-                                        <td class="p-2.5 border">Total Marks Obtained</td>
-                                        <td class="p-2.5 border text-center">700</td>
-                                        <td class="p-2.5 border text-center">-</td>
-                                        <td class="p-2.5 border text-center text-blue-900 text-sm">588 / 700</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-
-                        <!-- Final Result Banner & Print Button -->
-                        <div class="mt-4 bg-emerald-50 border-2 border-emerald-500 rounded p-4 flex flex-col sm:flex-row justify-between items-center">
-                            <div>
-                                <p class="text-xs text-gray-700">Result Declaration Date: <strong>26-Feb-2022</strong></p>
-                                <p class="text-xs text-emerald-700 font-semibold mt-0.5">Status: Authenticated via NCVT MIS Server</p>
-                            </div>
-                            <div class="mt-3 sm:mt-0 flex items-center space-x-3">
-                                <span class="bg-emerald-600 text-white font-extrabold px-6 py-1.5 rounded uppercase text-sm shadow">PASS</span>
-                                <button onclick="window.print()" class="no-print bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded hover:bg-blue-800">🖨️ Print</button>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Back to Creator -->
+                <div class="mt-6 text-center no-print">
+                    <a href="index.html" class="text-xs text-blue-600 underline font-semibold">&laquo; Create Another QR Code</a>
                 </div>
             </div>
 
-        </div>
-    </main>
+        </main>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 text-xs py-6 px-6 text-center border-t border-gray-800 no-print">
@@ -184,53 +187,84 @@
         </p>
     </footer>
 
-    <!-- JavaScript to Handle Verification & QR Code Parameter -->
+    <!-- JavaScript Logic -->
     <script>
-        const studentDatabase = {
-            "R190803019761": {
-                roll: "R190803019761",
-                name: "AJAY SINGH",
-                father: "MAJOR SINGH",
-                trade: "Electrician (NSQF)",
-                dob: "03-Jun-2001",
-                iti: "Baba Farid ITI, Guru Har Sahai"
-            }
-        };
+        let qrInstance = null;
 
-        function handleVerify(e) {
+        function generateQRCodeLink(e) {
             e.preventDefault();
-            const roll = document.getElementById('roll-input').value.trim().toUpperCase();
-            const resultBox = document.getElementById('result-box');
-
-            let student = studentDatabase[roll] || {
-                roll: roll || "R190803019761",
-                name: "AJAY SINGH",
-                father: "MAJOR SINGH",
-                trade: "Electrician (NSQF)",
-                dob: "03-Jun-2001",
-                iti: "Baba Farid ITI, Guru Har Sahai"
+            
+            // Collect form data
+            const studentData = {
+                roll: document.getElementById('gen-roll').value.trim(),
+                name: document.getElementById('gen-name').value.trim(),
+                father: document.getElementById('gen-father').value.trim(),
+                trade: document.getElementById('gen-trade').value.trim(),
+                dob: document.getElementById('gen-dob').value.trim(),
+                iti: document.getElementById('gen-iti').value.trim(),
+                marks: document.getElementById('gen-marks').value.trim(),
+                status: document.getElementById('gen-status').value
             };
 
-            document.getElementById('val-roll').innerText = student.roll;
-            document.getElementById('val-name').innerText = student.name;
-            document.getElementById('val-father').innerText = student.father;
-            document.getElementById('val-trade').innerText = student.trade;
-            document.getElementById('val-dob').innerText = student.dob;
-            document.getElementById('val-iti').innerText = student.iti;
+            // Convert to Base64 JSON string
+            const jsonString = JSON.stringify(studentData);
+            const base64Data = btoa(unescape(encodeURIComponent(jsonString)));
 
-            resultBox.classList.remove('hidden');
-            resultBox.scrollIntoView({ behavior: 'smooth' });
+            // Build the URL
+            const baseUrl = window.location.href.split('?')[0];
+            const finalLink = `${baseUrl}?data=${base64Data}`;
+
+            // Show link in input
+            document.getElementById('generated-link').value = finalLink;
+
+            // Clear previous QR code if any
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = "";
+
+            // Generate QR Code
+            qrInstance = new QRCode(qrContainer, {
+                text: finalLink,
+                width: 180,
+                height: 180,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            document.getElementById('qr-output-box').classList.remove('hidden');
+            qrContainer.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Auto open if URL has ?roll=XXXX
+        // On Page Load: Check if URL has ?data= parameter
         window.onload = function() {
             const params = new URLSearchParams(window.location.search);
-            const roll = params.get('roll');
-            if(roll) {
-                document.getElementById('roll-input').value = roll;
-                handleVerify(new Event('submit'));
+            const dataParam = params.get('data');
+
+            if (dataParam) {
+                try {
+                    // Decode base64 JSON data
+                    const jsonString = decodeURIComponent(escape(atob(dataParam)));
+                    const student = JSON.parse(jsonString);
+
+                    // Populate Verification View fields
+                    document.getElementById('val-roll').innerText = student.roll || '';
+                    document.getElementById('val-name').innerText = student.name || '';
+                    document.getElementById('val-father').innerText = student.father || '';
+                    document.getElementById('val-trade').innerText = student.trade || '';
+                    document.getElementById('val-dob').innerText = student.dob || '';
+                    document.getElementById('val-iti').innerText = student.iti || '';
+                    document.getElementById('val-marks').innerText = student.marks || '';
+                    document.getElementById('val-status').innerText = student.status || 'PASS';
+
+                    // Switch views
+                    document.getElementById('generator-view').classList.add('hidden');
+                    document.getElementById('verification-view').classList.remove('hidden');
+                    document.getElementById('mode-title').innerText = "Live Verification Mode";
+                } catch (err) {
+                    alert('Invalid or corrupted QR Code data!');
+                }
             }
-        }
+        };
     </script>
 </body>
 </html>
