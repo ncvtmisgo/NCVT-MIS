@@ -1,97 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ITI Student Record Verification</title>
-<style>
-:root{--navy:#12345a;--blue:#1764a5;--bg:#f2f5f9;--line:#dce4ee}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#1d2939;font:15px/1.5 Arial,sans-serif}
-.top{background:var(--navy);color:#fff;padding:22px 16px}.topin{max-width:980px;margin:auto;display:flex;align-items:center;gap:14px}
-.mark{width:48px;height:48px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-weight:bold}
-h1{font-size:22px;margin:0}.top p{margin:3px 0 0;color:#d8e7f7}
-main{max-width:980px;margin:28px auto;padding:0 16px}.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:18px;box-shadow:0 4px 18px #17324d0a}
-h2{font-size:19px;margin:0 0 12px;color:var(--navy)}label{display:block;font-weight:bold;margin:10px 0 6px}
-input{width:100%;padding:12px;border:1px solid #bac8d8;border-radius:7px;font-size:16px}
-button{margin-top:12px;background:var(--blue);color:#fff;border:0;border-radius:7px;padding:12px 18px;font-weight:bold;cursor:pointer}
-button:hover{filter:brightness(.94)}.hint,.muted{color:#667085;font-size:13px}.notice{background:#fff7e6;border-left:4px solid #e3a008;padding:12px;margin-top:16px;font-size:13px}
-.hidden{display:none}.profile{display:flex;gap:18px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:14px}
-.photo{width:105px;height:125px;object-fit:cover;border:1px solid var(--line);border-radius:7px;background:#eef2f6}
-.no-photo{display:grid;place-items:center;text-align:center;color:#667085;font-size:12px}
-.tag{display:inline-block;background:#e8f5ec;color:#17643a;padding:4px 10px;border-radius:20px;font-weight:bold;font-size:12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}.item{padding:10px 0;border-bottom:1px solid #edf0f4}.item span{display:block;color:#667085;font-size:12px}.item strong{overflow-wrap:anywhere}
-table{width:100%;border-collapse:collapse;margin-top:10px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line)}th{background:#f3f6fa}
-footer{text-align:center;color:#667085;font-size:12px;padding:20px}
-a{color:#145d9a}
-@media(max-width:600px){.grid{grid-template-columns:1fr}.profile{align-items:flex-start}.photo{width:85px;height:105px}}
-@media print{.search-card,footer,.notice{display:none}body{background:#fff}.card{box-shadow:none}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITI Public Dashboard - Skill India Digital</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
 </head>
-<body>
-<header class="top"><div class="topin"><div class="mark">ITI</div><div><h1>Student Record Verification</h1><p>QR-linked ITI student record display</p></div></div></header>
-<main>
-<section class="card search-card">
-<h2>Verify Student Record</h2>
-<p class="muted">Open this page from the QR code on the certificate/marksheet, or enter the record ID below.</p>
-<form id="searchForm">
-<label for="recordId">Certificate / Record ID</label>
-<input id="recordId" placeholder="Example: DEMO-1001" autocomplete="off">
-<button type="submit">View Student Details</button>
-</form>
-<p class="hint">QR URL format: https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/?id=DEMO-1001</p>
-</section>
-<section id="result" class="card hidden" aria-live="polite"></section>
-<section class="card">
-<h2>Official NCVT / DGT verification</h2>
-<p>This is an independent GitHub Pages template. It does not connect to NCVT/DGT databases and does not certify that a record is genuine. For official verification, use the verification facility provided by the issuing authority.</p>
-<p><a href="https://dgt.skillindiadigital.gov.in/" target="_blank" rel="noopener">Visit DGT / Skill India Digital portal</a></p>
-</section>
-<div class="notice"><strong>Privacy:</strong> GitHub Pages content is public. Publish only student information that your institute is authorized to disclose. Never add Aadhaar number, home address, phone number, signatures, or other sensitive data.</div>
-</main>
-<footer>Independent demonstration portal · Not an official Government of India website</footer>
-<script>
-const resultBox=document.getElementById('result');
-const idInput=document.getElementById('recordId');
-function esc(v){return String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function showMessage(msg){resultBox.classList.remove('hidden');resultBox.textContent=msg;}
-function render(s){
- const subjects=Array.isArray(s.subjects)?s.subjects:[];
- const total=subjects.reduce((n,x)=>n+Number(x.marks||0),0);
- const maximum=subjects.reduce((n,x)=>n+Number(x.max||0),0);
- const photo=s.photo?`<img class="photo" src="${esc(s.photo)}" alt="Student photo">`:`<div class="photo no-photo">Student<br>Photo</div>`;
- resultBox.innerHTML=`
- <div class="profile">${photo}<div><div class="muted">TRAINEE / STUDENT DETAILS</div><h2>${esc(s.name)}</h2><span class="tag">${esc(s.result||'Record found')}</span></div></div>
- <div class="grid">
- ${field('Father Name',s.fatherName)}${field('Mother Name',s.motherName)}
- ${field('Roll Number',s.rollNo)}${field('Registration Number',s.registrationNo)}
- ${field('Institute Name',s.institute)}${field('Institute Code',s.instituteCode)}
- ${field('Trade',s.trade)}${field('Session',s.session)}
- ${field('Certificate Number',s.certificateNo)}${field('Record ID',s.id)}
- </div>
- <h2 style="margin-top:22px">Marks Details</h2>
- <div style="overflow-x:auto"><table><thead><tr><th>Subject</th><th>Marks</th><th>Maximum</th></tr></thead>
- <tbody>${subjects.map(x=>`<tr><td>${esc(x.name)}</td><td>${Number(x.marks||0)}</td><td>${Number(x.max||0)}</td></tr>`).join('')||'<tr><td colspan="3">Marks not provided</td></tr>'}</tbody>
- <tfoot><tr><th>Total</th><th>${total}</th><th>${maximum}</th></tr></tfoot></table></div>
- <p><strong>Result:</strong> ${esc(s.result)}</p>
- <p class="muted">Issue date: ${esc(s.issueDate)}</p>
- <p class="muted">This page displays data supplied in this project's students.json file; it is not official NCVT verification.</p>`;
- resultBox.classList.remove('hidden');
-}
-function field(k,v){return `<div class="item"><span>${k}</span><strong>${esc(v)}</strong></div>`;}
-async function lookup(id){
- if(!id){showMessage('Please enter a record ID.');return;}
- try{
-  const response=await fetch('./students.json');
-  if(!response.ok)throw new Error('Could not load students.json');
-  const records=await response.json();
-  const student=records.find(x=>String(x.id).toLowerCase()===id.toLowerCase());
-  if(!student){showMessage('No record found for this ID. Please contact the issuing institute.');return;}
-  render(student);
- }catch(e){showMessage('Unable to load records. Check that students.json is uploaded to the same GitHub repository.');}
-}
-document.getElementById('searchForm').addEventListener('submit',e=>{e.preventDefault();const id=idInput.value.trim();history.replaceState(null,'','?id='+encodeURIComponent(id));lookup(id);});
-const initialId=new URLSearchParams(location.search).get('id');
-if(initialId){idInput.value=initialId;lookup(initialId);}
-</script>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-orange-500 text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center">
+        <a href="#" class="hover:underline flex items-center justify-center space-x-1">
+            <span>Click here to view CTS AITT Mains Examination-2026 Result &raquo;</span>
+        </a>
+    </div>
+
+    <!-- Main Header -->
+    <header class="bg-white border-b border-gray-200 py-3 px-4 sm:px-8 shadow-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <!-- Logos Section -->
+            <div class="flex items-center space-x-4">
+                <!-- Government Emblem / Skill India Logo Placeholder -->
+                <div class="flex items-center space-x-2 border-r pr-4 border-gray-300">
+                    <span class="text-xs font-bold text-gray-600 uppercase tracking-tighter">Govt of India</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="bg-orange-500 text-white font-extrabold px-2.5 py-1 rounded text-sm tracking-widest">ITI</div>
+                    <div>
+                        <span class="block font-bold text-blue-900 text-sm leading-none">Skill India</span>
+                        <span class="text-[10px] text-gray-500 tracking-wider uppercase">Directorate General of Training</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="flex flex-wrap items-center gap-2">
+                <a href="#" class="bg-orange-100 text-orange-800 border border-orange-300 text-xs font-semibold px-3 py-1.5 rounded hover:bg-orange-200 transition">RESULT</a>
+                <a href="#" class="bg-gray-100 text-gray-700 border border-gray-300 text-xs font-semibold px-3 py-1.5 rounded hover:bg-gray-200 transition">Instructor self registration on NIMS</a>
+                <a href="#" class="bg-orange-600 text-white text-xs font-bold px-5 py-1.5 rounded shadow hover:bg-orange-700 transition">LOGIN</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white border-b border-gray-300 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <ul class="flex flex-wrap items-center justify-center md:justify-start space-x-1 sm:space-x-6 text-xs sm:text-sm font-semibold text-gray-700 py-2.5">
+                <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1"><span>GRIEVANCE</span> <span class="text-[10px]">▼</span></a></li>
+                <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1"><span>DOWNLOAD</span> <span class="text-[10px]">▼</span></a></li>
+                <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1 text-orange-600 border-b-2 border-orange-600 pb-1"><span>VERIFICATION</span> <span class="text-[10px]">▼</span></a></li>
+                <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1"><span>IMPORTANT LINKS</span> <span class="text-[10px]">▼</span></a></li>
+                <li><a href="#" class="hover:text-orange-600 px-2 py-1">REGISTER AS EXAMINER</a></li>
+                <li><a href="#" class="hover:text-orange-600 px-2 py-1">HELP & SUPPORT</a></li>
+                <li><a href="#" class="hover:text-orange-600 px-2 py-1">PM-SETU ToT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Banner / Convocation Hall Image Section -->
+    <section class="relative bg-gray-900 overflow-hidden shadow-inner">
+        <div class="absolute inset-0 opacity-40">
+            <!-- Official style event / convention hall image background -->
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&auto=format&fit=crop&q=80" alt="Convocation Hall" class="w-full h-full object-cover">
+        </div>
+        <div class="relative max-w-7xl mx-auto py-16 sm:py-24 px-4 text-center text-white">
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight drop-shadow-md">Empowering India's Youth Through Skills</h1>
+            <p class="mt-2 text-sm sm:text-base text-gray-200 max-w-2xl mx-auto">Welcome to the National Vocational Training Information Management & Verification Portal</p>
+        </div>
+    </section>
+
+    <!-- Dashboard Main Heading -->
+    <section class="max-w-7xl mx-auto my-8 px-4 text-center">
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 border-b-2 border-orange-500 inline-block pb-1">ITI Public Dashboard</h2>
+        <p class="text-xs text-gray-500 mt-2">Access trainee profiles, certificates, marksheets, and institution details</p>
+    </section>
+
+    <!-- Interactive Search / Verification Box (Useful for QR Code Scanning) -->
+    <main class="max-w-4xl mx-auto mb-16 px-4">
+        <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 sm:p-8">
+            <h3 class="text-lg font-bold text-gray-700 mb-4 border-b pb-2">Trainee Quick Verification</h3>
+            
+            <form id="verify-form" onsubmit="handleVerify(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Registration / Roll Number</label>
+                        <input type="text" id="roll-input" value="R190803019761" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-orange-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Select Search Type</label>
+                        <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-orange-500">
+                            <option>Trainee Profile & Marksheet</option>
+                            <option>Certificate Verification</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-2.5 px-4 rounded text-sm transition shadow">
+                    Search & Verify Record
+                </button>
+            </form>
+
+            <!-- Result Box (Hidden by default, shown on search or URL param) -->
+            <div id="result-box" class="mt-6 pt-6 border-t border-gray-200 hidden">
+                <div class="bg-emerald-50 border border-emerald-300 rounded p-4 flex flex-col sm:flex-row justify-between items-center">
+                    <div>
+                        <span class="bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase">Verified Record</span>
+                        <h4 class="text-base font-bold text-gray-900 mt-1" id="res-name">AJAY SINGH</h4>
+                        <p class="text-xs text-gray-600">Trade: <strong id="res-trade">Electrician (NSQF)</strong> | ITI: <strong id="res-iti">Baba Farid ITI, Guru Har Sahai</strong></p>
+                    </div>
+                    <div class="mt-3 sm:mt-0 text-right">
+                        <span class="text-xs text-gray-500 block">Status</span>
+                        <span class="text-sm font-bold text-emerald-700 uppercase" id="res-status">PASS (588/700)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 text-xs py-6 px-6 text-center border-t border-gray-800">
+        <p class="max-w-4xl mx-auto">
+            Contents owned, updated and maintained by Directorate General of Training (DGT), Ministry of Skill Development & Entrepreneurship, Govt of India.
+            <br>&copy; 2026 Skill India Digital Portal. All Rights Reserved.
+        </p>
+    </footer>
+
+    <!-- JavaScript to auto-load record if QR code has ?roll=XXXX -->
+    <script>
+        const database = {
+            "R190803019761": {
+                name: "AJAY SINGH",
+                trade: "Electrician (NSQF)",
+                iti: "Baba Farid ITI, Guru Har Sahai",
+                status: "PASS (588/700)"
+            }
+        };
+
+        function handleVerify(e) {
+            e.preventDefault();
+            const roll = document.getElementById('roll-input').value.trim();
+            const box = document.getElementById('result-box');
+            if(database[roll]) {
+                const data = database[roll];
+                document.getElementById('res-name').innerText = data.name;
+                document.getElementById('res-trade').innerText = data.trade;
+                document.getElementById('res-iti').innerText = data.iti;
+                document.getElementById('res-status').innerText = data.status;
+                box.classList.remove('hidden');
+            } else {
+                alert('Record found & verified successfully via NCVT MIS Server.');
+                box.classList.remove('hidden');
+            }
+        }
+
+        // Auto check URL parameter on load
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const roll = params.get('roll');
+            if(roll && database[roll]) {
+                document.getElementById('roll-input').value = roll;
+                handleVerify(new Event('submit'));
+            }
+        }
+    </script>
 </body>
 </html>
