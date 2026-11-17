@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITI Public Dashboard - Skill India Digital</title>
+    <title>Download Marksheet - Skill India Digital</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -12,159 +12,190 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800">
+<body class="bg-gray-100 font-sans text-gray-800 min-h-screen flex flex-col justify-between">
 
-    <!-- Top Announcement Bar -->
-    <div class="bg-orange-500 text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center">
-        <a href="#" class="hover:underline flex items-center justify-center space-x-1">
-            <span>Click here to view CTS AITT Mains Examination-2026 Result &raquo;</span>
-        </a>
-    </div>
+    <div>
+        <!-- Top Announcement Bar -->
+        <div class="bg-orange-500 text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center">
+            <a href="#" class="hover:underline">
+                Click here to view CTS AITT Mains Examination-2026 Result &raquo;
+            </a>
+        </div>
 
-    <!-- Main Header -->
-    <header class="bg-white border-b border-gray-200 py-3 px-4 sm:px-8 shadow-sm">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <!-- Logos Section -->
-            <div class="flex items-center space-x-4">
-                <!-- Government Emblem / Skill India Logo Placeholder -->
-                <div class="flex items-center space-x-2 border-r pr-4 border-gray-300">
-                    <span class="text-xs font-bold text-gray-600 uppercase tracking-tighter">Govt of India</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <div class="bg-orange-500 text-white font-extrabold px-2.5 py-1 rounded text-sm tracking-widest">ITI</div>
-                    <div>
-                        <span class="block font-bold text-blue-900 text-sm leading-none">Skill India</span>
-                        <span class="text-[10px] text-gray-500 tracking-wider uppercase">Directorate General of Training</span>
+        <!-- Main Header -->
+        <header class="bg-white border-b border-gray-200 py-3 px-4 sm:px-8 shadow-sm">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <!-- Logos Section -->
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2 border-r pr-4 border-gray-300">
+                        <span class="text-xs font-bold text-gray-600 uppercase">Govt of India</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="bg-orange-500 text-white font-extrabold px-2.5 py-1 rounded text-sm tracking-widest">ITI</div>
+                        <div>
+                            <span class="block font-bold text-blue-900 text-sm leading-none">Skill India</span>
+                            <span class="text-[10px] text-gray-500 tracking-wider uppercase">Directorate General of Training</span>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Header Action Buttons -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <a href="#" class="bg-orange-100 text-orange-800 border border-orange-300 text-xs font-semibold px-3 py-1.5 rounded hover:bg-orange-200 transition">RESULT</a>
+                    <a href="#" class="bg-gray-100 text-gray-700 border border-gray-300 text-xs font-semibold px-3 py-1.5 rounded hover:bg-gray-200 transition">Instructor self registration on NIMS</a>
+                    <a href="#" class="bg-orange-600 text-white text-xs font-bold px-5 py-1.5 rounded shadow hover:bg-orange-700 transition">LOGIN</a>
+                </div>
             </div>
+        </header>
 
-            <!-- Header Action Buttons -->
-            <div class="flex flex-wrap items-center gap-2">
-                <a href="#" class="bg-orange-100 text-orange-800 border border-orange-300 text-xs font-semibold px-3 py-1.5 rounded hover:bg-orange-200 transition">RESULT</a>
-                <a href="#" class="bg-gray-100 text-gray-700 border border-gray-300 text-xs font-semibold px-3 py-1.5 rounded hover:bg-gray-200 transition">Instructor self registration on NIMS</a>
-                <a href="#" class="bg-orange-600 text-white text-xs font-bold px-5 py-1.5 rounded shadow hover:bg-orange-700 transition">LOGIN</a>
+        <!-- Navigation Bar -->
+        <nav class="bg-white border-b border-gray-300 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4">
+                <ul class="flex flex-wrap items-center justify-center md:justify-start space-x-1 sm:space-x-6 text-xs sm:text-sm font-semibold text-gray-700 py-2.5">
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1"><span>GRIEVANCE</span> <span>▼</span></a></li>
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1 text-orange-600 border-b-2 border-orange-600 pb-1"><span>DOWNLOAD</span> <span>▼</span></a></li>
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1"><span>VERIFICATION</span> <span>▼</span></a></li>
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1"><span>IMPORTANT LINKS</span> <span>▼</span></a></li>
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1">REGISTER AS EXAMINER</a></li>
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1">HELP & SUPPORT</a></li>
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1">PM-SETU ToT</a></li>
+                </ul>
             </div>
-        </div>
-    </header>
+        </nav>
 
-    <!-- Navigation Bar -->
-    <nav class="bg-white border-b border-gray-300 shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <ul class="flex flex-wrap items-center justify-center md:justify-start space-x-1 sm:space-x-6 text-xs sm:text-sm font-semibold text-gray-700 py-2.5">
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1"><span>GRIEVANCE</span> <span class="text-[10px]">▼</span></a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1"><span>DOWNLOAD</span> <span class="text-[10px]">▼</span></a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1 text-orange-600 border-b-2 border-orange-600 pb-1"><span>VERIFICATION</span> <span class="text-[10px]">▼</span></a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1 flex items-center space-x-1"><span>IMPORTANT LINKS</span> <span class="text-[10px]">▼</span></a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1">REGISTER AS EXAMINER</a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1">HELP & SUPPORT</a></li>
-                <li><a href="#" class="hover:text-orange-600 px-2 py-1">PM-SETU ToT</a></li>
-            </ul>
-        </div>
-    </nav>
+        <!-- Main Form Container -->
+        <main class="max-w-4xl mx-auto my-10 px-4">
+            <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+                
+                <!-- Box Header -->
+                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                    <h1 class="text-lg font-bold text-gray-700">Download Marksheet</h1>
+                </div>
 
-    <!-- Hero Banner / Convocation Hall Image Section -->
-    <section class="relative bg-gray-900 overflow-hidden shadow-inner">
-        <div class="absolute inset-0 opacity-40">
-            <!-- Official style event / convention hall image background -->
-            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&auto=format&fit=crop&q=80" alt="Convocation Hall" class="w-full h-full object-cover">
-        </div>
-        <div class="relative max-w-7xl mx-auto py-16 sm:py-24 px-4 text-center text-white">
-            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight drop-shadow-md">Empowering India's Youth Through Skills</h1>
-            <p class="mt-2 text-sm sm:text-base text-gray-200 max-w-2xl mx-auto">Welcome to the National Vocational Training Information Management & Verification Portal</p>
-        </div>
-    </section>
-
-    <!-- Dashboard Main Heading -->
-    <section class="max-w-7xl mx-auto my-8 px-4 text-center">
-        <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 border-b-2 border-orange-500 inline-block pb-1">ITI Public Dashboard</h2>
-        <p class="text-xs text-gray-500 mt-2">Access trainee profiles, certificates, marksheets, and institution details</p>
-    </section>
-
-    <!-- Interactive Search / Verification Box (Useful for QR Code Scanning) -->
-    <main class="max-w-4xl mx-auto mb-16 px-4">
-        <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 sm:p-8">
-            <h3 class="text-lg font-bold text-gray-700 mb-4 border-b pb-2">Trainee Quick Verification</h3>
-            
-            <form id="verify-form" onsubmit="handleVerify(event)" class="space-y-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Form Section -->
+                <form id="marksheet-form" onsubmit="handleViewDetails(event)" class="p-6 sm:p-8 space-y-6">
+                    
+                    <!-- Scheme Type -->
                     <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Registration / Roll Number</label>
-                        <input type="text" id="roll-input" value="R190803019761" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-orange-500" required>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Select Search Type</label>
-                        <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-orange-500">
-                            <option>Trainee Profile & Marksheet</option>
-                            <option>Certificate Verification</option>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Scheme Type</label>
+                        <select id="scheme-type" class="w-full border border-gray-300 rounded px-3 py-2.5 text-sm bg-white focus:outline-none focus:border-orange-500">
+                            <option>CTS</option>
+                            <option>CITS</option>
+                            <option>Apprenticeship</option>
                         </select>
                     </div>
-                </div>
-                <button type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-2.5 px-4 rounded text-sm transition shadow">
-                    Search & Verify Record
-                </button>
-            </form>
 
-            <!-- Result Box (Hidden by default, shown on search or URL param) -->
-            <div id="result-box" class="mt-6 pt-6 border-t border-gray-200 hidden">
-                <div class="bg-emerald-50 border border-emerald-300 rounded p-4 flex flex-col sm:flex-row justify-between items-center">
+                    <!-- PRN Number -->
                     <div>
-                        <span class="bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase">Verified Record</span>
-                        <h4 class="text-base font-bold text-gray-900 mt-1" id="res-name">AJAY SINGH</h4>
-                        <p class="text-xs text-gray-600">Trade: <strong id="res-trade">Electrician (NSQF)</strong> | ITI: <strong id="res-iti">Baba Farid ITI, Guru Har Sahai</strong></p>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">PRN Number</label>
+                        <input type="text" id="prn-input" placeholder="Enter PRN Number (e.g. R190803019761)" class="w-full border border-gray-300 rounded px-3 py-2.5 text-sm focus:outline-none focus:border-orange-500" required>
                     </div>
-                    <div class="mt-3 sm:mt-0 text-right">
-                        <span class="text-xs text-gray-500 block">Status</span>
-                        <span class="text-sm font-bold text-emerald-700 uppercase" id="res-status">PASS (588/700)</span>
+
+                    <!-- DOB -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">DOB</label>
+                        <input type="date" id="dob-input" class="w-full border border-gray-300 rounded px-3 py-2.5 text-sm focus:outline-none focus:border-orange-500" required>
+                    </div>
+
+                    <!-- View Details Button -->
+                    <div class="pt-2 text-center">
+                        <button type="submit" class="bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-bold px-10 py-2.5 rounded-md text-sm transition duration-200 shadow-sm">
+                            VIEW DETAILS
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Dynamic Result Section (Appears after clicking View Details) -->
+                <div id="result-section" class="p-6 border-t border-gray-200 bg-slate-50 hidden">
+                    <div class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm">
+                        <div class="flex justify-between items-center pb-3 border-b border-gray-200 mb-4">
+                            <h3 class="font-bold text-blue-900 text-base">Trainee & Marksheet Details</h3>
+                            <span class="bg-green-600 text-white text-xs px-2.5 py-1 rounded font-bold uppercase">Verified Success</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                            <div><span class="text-gray-500 block text-xs">PRN / Roll No:</span><strong id="res-roll" class="text-gray-900"></strong></div>
+                            <div><span class="text-gray-500 block text-xs">Trainee Name:</span><strong id="res-name" class="text-gray-900"></strong></div>
+                            <div><span class="text-gray-500 block text-xs">Trade:</span><strong id="res-trade" class="text-gray-900"></strong></div>
+                            <div><span class="text-gray-500 block text-xs">ITI Name:</span><strong id="res-iti" class="text-gray-900"></strong></div>
+                        </div>
+                        <div class="mt-6 overflow-x-auto">
+                            <table class="w-full text-left text-xs border border-gray-300">
+                                <tr class="bg-blue-900 text-white">
+                                    <th class="p-2 border">Subject</th>
+                                    <th class="p-2 border text-center">Max Marks</th>
+                                    <th class="p-2 border text-center">Obtained Marks</th>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border">Trade Theory</td>
+                                    <td class="p-2 border text-center">100</td>
+                                    <td class="p-2 border text-center font-bold text-blue-900">82</td>
+                                </tr>
+                                <tr class="bg-gray-50">
+                                    <td class="p-2 border">Trade Practical</td>
+                                    <td class="p-2 border text-center">250</td>
+                                    <td class="p-2 border text-center font-bold text-blue-900">210</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center pt-3 border-t">
+                            <span class="text-xs text-gray-600">Total Marks: <strong class="text-gray-900">588 / 700</strong></span>
+                            <span class="bg-emerald-600 text-white font-bold px-4 py-1 rounded text-xs">PASS</span>
+                        </div>
                     </div>
                 </div>
+
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 text-xs py-6 px-6 text-center border-t border-gray-800">
+    <footer class="bg-gray-900 text-gray-400 text-xs py-6 px-6 text-center border-t border-gray-800 mt-10">
         <p class="max-w-4xl mx-auto">
             Contents owned, updated and maintained by Directorate General of Training (DGT), Ministry of Skill Development & Entrepreneurship, Govt of India.
             <br>&copy; 2026 Skill India Digital Portal. All Rights Reserved.
         </p>
     </footer>
 
-    <!-- JavaScript to auto-load record if QR code has ?roll=XXXX -->
+    <!-- Script to handle Form Submission & Data Verification -->
     <script>
-        const database = {
-            "R190803019751": {
-                name: "SANJAY",
+        const studentDatabase = {
+            "R190803019761": {
+                roll: "R190803019761",
+                name: "AJAY SINGH",
                 trade: "Electrician (NSQF)",
-                iti: "BABA NAND III, MOGA",
-                status: "PASS (588/700)"
+                iti: "Baba Farid ITI, Guru Har Sahai"
             }
         };
 
-        function handleVerify(e) {
+        function handleViewDetails(e) {
             e.preventDefault();
-            const roll = document.getElementById('roll-input').value.trim();
-            const box = document.getElementById('result-box');
-            if(database[roll]) {
-                const data = database[roll];
-                document.getElementById('res-name').innerText = data.name;
-                document.getElementById('res-trade').innerText = data.trade;
-                document.getElementById('res-iti').innerText = data.iti;
-                document.getElementById('res-status').innerText = data.status;
-                box.classList.remove('hidden');
-            } else {
-                alert('Record found & verified successfully via NCVT MIS Server.');
-                box.classList.remove('hidden');
-            }
+            const prn = document.getElementById('prn-input').value.trim();
+            const resultSection = document.getElementById('result-section');
+            
+            // Default sample data if not in DB
+            let student = studentDatabase[prn] || {
+                roll: prn || "R190803019761",
+                name: "AJAY SINGH",
+                trade: "Electrician (NSQF)",
+                iti: "Baba Farid ITI, Guru Har Sahai"
+            };
+
+            document.getElementById('res-roll').innerText = student.roll;
+            document.getElementById('res-name').innerText = student.name;
+            document.getElementById('res-trade').innerText = student.trade;
+            document.getElementById('res-iti').innerText = student.iti;
+
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Auto check URL parameter on load
+        // If URL has ?roll=XXXX, auto fill PRN
         window.onload = function() {
             const params = new URLSearchParams(window.location.search);
             const roll = params.get('roll');
-            if(roll && database[roll]) {
-                document.getElementById('roll-input').value = roll;
-                handleVerify(new Event('submit'));
+            if(roll) {
+                document.getElementById('prn-input').value = roll;
+                handleViewDetails(new Event('submit'));
             }
         }
     </script>
