@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate & Marksheet Verification Portal</title>
+    <title>NCVT MIS - Trainee Profile Verification</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,20 +12,34 @@
             padding: 0;
             color: #333;
         }
-        .header {
-            background-color: #004080;
+        /* Top Govt Header */
+        .top-header {
+            background: #ffffff;
+            border-bottom: 3px solid #ff9933;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .top-header img {
+            height: 40px;
+        }
+        .portal-title {
+            background-color: #003366;
             color: white;
-            padding: 15px;
             text-align: center;
-            font-size: 18px;
+            padding: 10px;
+            font-size: 16px;
             font-weight: bold;
+            letter-spacing: 0.5px;
         }
         .container {
             max-width: 600px;
             margin: 15px auto;
             background: white;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 6px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .profile-section {
@@ -33,19 +47,21 @@
             margin-bottom: 20px;
         }
         .profile-img {
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            border: 3px solid #004080;
+            border: 4px solid #ff9933;
             object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         h2 {
-            text-align: center;
-            color: #004080;
-            font-size: 20px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #004080;
+            color: #003366;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #003366;
             padding-bottom: 5px;
+            text-transform: uppercase;
         }
         .info-table, .marks-table {
             width: 100%;
@@ -53,52 +69,68 @@
             margin-bottom: 20px;
         }
         .info-table td, .marks-table th, .marks-table td {
-            padding: 9px 12px;
-            border: 1px solid #ddd;
-            font-size: 14px;
+            padding: 8px 10px;
+            border: 1px solid #dcdcdc;
+            font-size: 13px;
         }
         .info-table td:first-child {
             font-weight: bold;
-            background-color: #f9f9f9;
+            background-color: #f8f9fa;
             width: 42%;
-            color: #444;
+            color: #333;
         }
         .marks-table th {
-            background-color: #004080;
+            background-color: #003366;
             color: white;
+            text-align: center;
+            font-size: 13px;
+        }
+        .marks-table td {
+            text-align: center;
+        }
+        .marks-table td:first-child {
             text-align: left;
         }
         .result-box {
             background-color: #e8f5e9;
             border: 1px solid #c8e6c9;
             padding: 12px;
-            border-radius: 5px;
+            border-radius: 4px;
             text-align: center;
             font-weight: bold;
             color: #2e7d32;
-            font-size: 15px;
+            font-size: 14px;
         }
         .error-box {
             text-align: center;
             color: #d32f2f;
-            padding: 30px;
-            font-size: 16px;
+            padding: 40px;
+            font-size: 15px;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        Baba Farid ITI - Official Verification Portal
+    <!-- Gov Header similar to video -->
+    <div class="top-header">
+        <div style="font-size: 12px; font-weight: bold; color: #003366;">
+            Ministry of Skill Development<br>& Entrepreneurship, Govt. of India
+        </div>
+        <div style="font-weight: bold; color: #ff9933; font-size: 16px;">
+            NCVT MIS
+        </div>
+    </div>
+    <div class="portal-title">
+        Trainee Verification & Marksheet Portal
     </div>
 
     <div class="container" id="content">
-        <!-- Dynamic Data will load here -->
+        <!-- Dynamic Data Loaded Here -->
     </div>
 
     <script>
-        // ਸਟੂਡੈਂਟਸ ਦਾ ਡਾਟਾ (ਇੱਥੇ ਤੁਸੀਂ ਹੋਰ ਵੀ ਸਟੂਡੈਂਟਸ ਜੋੜ ਸਕਦੇ ਹੋ)
+        // ਸਟੂਡੈਂਟਸ ਦਾ ਡਾਟਾ (NCVT ਫਾਰਮੈਟ ਅਨੁਸਾਰ)
         const students = {
             "ITI2026001": {
                 rollNo: "R19083019761",
@@ -109,12 +141,13 @@
                 admissionYear: "2019",
                 dob: "03-Jun-2001",
                 itiCode: "GR03000313",
-                itiName: "Baba Farid Pvt. ITI",
+                itiName: "Private ITI Center",
                 shift: "1",
                 unit: "2",
+                reappear: "No",
                 resultDate: "26-Feb-2022",
                 result: "Pass",
-                photo: "https://via.placeholder.com/100", // ਇੱਥੇ ਸਟੂਡੈਂਟ ਦੀ ਅਸਲੀ ਫੋਟੋ ਦਾ ਲિંਕ ਪਾ ਸਕਦੇ ਹੋ
+                photo: "https://via.placeholder.com/110", // ਇੱਥੇ ਅਸਲੀ ਫੋਟੋ ਦਾ ਲਿੰਕ ਲਗਾਓ
                 marks: [
                     {subject: "Trade Theory", max: 100, min: 33, obtained: 78},
                     {subject: "Employability Skills", max: 50, min: 17, obtained: 42},
@@ -126,7 +159,6 @@
             }
         };
 
-        // URL ਵਿੱਚੋਂ ID ਪੜ੍ਹਨਾ (ਜਿਵੇਂ ?id=ITI2026001)
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id');
         const container = document.getElementById('content');
@@ -145,7 +177,7 @@
             container.innerHTML = `
                 <h2>Trainee Details</h2>
                 <div class="profile-section">
-                    <img src="${s.photo}" class="profile-img" alt="Student Photo">
+                    <img src="${s.photo}" class="profile-img" alt="Trainee Photo">
                 </div>
                 <table class="info-table">
                     <tr><td>Roll No</td><td>${s.rollNo}</td></tr>
@@ -159,14 +191,24 @@
                     <tr><td>ITI Name</td><td>${s.itiName}</td></tr>
                     <tr><td>Shift</td><td>${s.shift}</td></tr>
                     <tr><td>Unit</td><td>${s.unit}</td></tr>
-                    <tr><td>Eligible to Reappear</td><td>No</td></tr>
+                    <tr><td>Eligible to Reappear</td><td>${s.reappear}</td></tr>
                 </table>
 
                 <h2>Marks Details</h2>
                 <table class="marks-table">
-                    <tr><th>Subject</th><th>Max</th><th>Min</th><th>Obtained</th></tr>
+                    <tr>
+                        <th>Subjects</th>
+                        <th>Max. Marks</th>
+                        <th>Min. Pass Marks</th>
+                        <th>Marks Obtained</th>
+                    </tr>
                     ${marksRows}
-                    <tr><td><b>Total</b></td><td><b>${totalMax}</b></td><td>-</td><td><b>${totalObtained}</b></td></tr>
+                    <tr>
+                        <td style="text-align: left;"><b>Total</b></td>
+                        <td><b>${totalMax}</b></td>
+                        <td>-</td>
+                        <td><b>${totalObtained}</b></td>
+                    </tr>
                 </table>
 
                 <div class="result-box">
@@ -177,8 +219,8 @@
         } else {
             container.innerHTML = `
                 <div class="error-box">
-                    ⚠️ ਅਵੈਧ ਰਿਕਾਰਡ ਜਾਂ ਗਲਤ QR ਕੋਡ!<br>
-                    <span style="font-size: 13px; color: #666; font-weight: normal;">ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਸਰਟੀਫਿਕੇਟ 'ਤੇ ਦਿੱਤਾ ਅਸਲੀ QR ਕੋਡ ਸਕੈਨ ਕਰੋ ਜੀ।</span>
+                    ⚠️ Invalid Trainee ID or QR Code!<br>
+                    <span style="font-size: 12px; color: #666; font-weight: normal; margin-top: 5px; display: block;">ਕਿਰਪਾ ਕਰਕੇ ਸਹੀ QR ਕੋਡ ਸਕੈਨ ਕਰੋ ਜੀ।</span>
                 </div>
             `;
         }
