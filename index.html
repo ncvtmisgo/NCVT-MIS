@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITI Certificate & QR Verification Portal</title>
+    <title>ITI Public Dashboard - Skill India Digital</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- QR Code Generator Library -->
@@ -19,98 +19,108 @@
     <div>
         <!-- Top Announcement Bar -->
         <div class="bg-orange-500 text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center no-print">
-            <span>National Council for Vocational Training &bull; Digital Verification System</span>
+            <a href="#" class="hover:underline">Click here to view CTS AITT Mains Examination-2026 Result &raquo;</a>
         </div>
 
-        <!-- Header -->
+        <!-- Main Header -->
         <header class="bg-white border-b border-gray-200 py-3 px-4 sm:px-8 shadow-sm no-print">
-            <div class="max-w-5xl mx-auto flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-orange-500 text-white font-extrabold px-2.5 py-1 rounded text-sm tracking-widest">ITI</div>
-                    <div>
-                        <span class="block font-bold text-blue-900 text-sm leading-none">Skill India Digital</span>
-                        <span class="text-[10px] text-gray-500 uppercase">Verification Portal</span>
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <!-- Logos Section -->
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2 border-r pr-4 border-gray-300">
+                        <span class="text-xs font-bold text-gray-600 uppercase">Govt of India</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="bg-orange-500 text-white font-extrabold px-2.5 py-1 rounded text-sm tracking-widest">ITI</div>
+                        <div>
+                            <span class="block font-bold text-blue-900 text-sm leading-none">Skill India</span>
+                            <span class="text-[10px] text-gray-500 tracking-wider uppercase">Directorate General of Training</span>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <span id="mode-title" class="text-xs bg-blue-100 text-blue-800 font-semibold px-3 py-1 rounded-full">QR Generator Mode</span>
+
+                <!-- Header Action Buttons -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="switchTab('home')" class="bg-orange-100 text-orange-800 border border-orange-300 text-xs font-semibold px-3 py-1.5 rounded hover:bg-orange-200 transition">RESULT</button>
+                    <span class="bg-gray-100 text-gray-700 border border-gray-300 text-xs font-semibold px-3 py-1.5 rounded">Instructor self registration on NIMS</span>
+                    <button onclick="switchTab('admin')" class="bg-orange-600 text-white text-xs font-bold px-5 py-1.5 rounded shadow hover:bg-orange-700 transition">ADMIN / QR GENERATOR</button>
                 </div>
             </div>
         </header>
 
-        <!-- MAIN CONTAINER (Dynamically switches between Generator & Verification) -->
-        <main class="max-w-4xl mx-auto my-8 px-4">
+        <!-- Navigation Bar -->
+        <nav class="bg-white border-b border-gray-300 shadow-sm sticky top-0 z-50 no-print">
+            <div class="max-w-7xl mx-auto px-4">
+                <ul class="flex flex-wrap items-center justify-center md:justify-start space-x-1 sm:space-x-6 text-xs sm:text-sm font-semibold text-gray-700 py-2.5">
+                    <li><a href="#" onclick="switchTab('home')" class="hover:text-orange-600 px-2 py-1">GRIEVANCE ▼</a></li>
+                    <li><a href="#" onclick="switchTab('download')" class="hover:text-orange-600 px-2 py-1 text-orange-600 border-b-2 border-orange-600 pb-1">DOWNLOAD ▼</a></li>
+                    <li><a href="#" onclick="switchTab('home')" class="hover:text-orange-600 px-2 py-1">VERIFICATION ▼</a></li>
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1">IMPORTANT LINKS ▼</a></li>
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1">REGISTER AS EXAMINER</a></li>
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1">HELP & SUPPORT</a></li>
+                    <li><a href="#" class="hover:text-orange-600 px-2 py-1">PM-SETU ToT</a></li>
+                </ul>
+            </div>
+        </nav>
 
-            <!-- VIEW 1: QR CODE GENERATOR FORM (Admin use) -->
-            <div id="generator-view" class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 sm:p-8">
-                <h1 class="text-xl font-bold text-blue-900 mb-2 border-b pb-2">Create Student QR Code & Verification Link</h1>
-                <p class="text-xs text-gray-500 mb-6">ਸਟੂਡੈਂਟ ਦੀ ਜਾਣਕਾਰੀ ਭਰੋ ਅਤੇ ਤੁਰੰਤ QR Code ਬਣਾਓ ਤਾਂ ਜੋ ਸਰਟੀਫਿਕੇਟ ਉੱਤੇ ਲਗਾਇਆ ਜਾ ਸਕੇ।</p>
+        <!-- Hero Banner Image Section (Official Style) -->
+        <section id="hero-banner" class="relative bg-gray-900 overflow-hidden shadow-inner no-print">
+            <div class="absolute inset-0 opacity-40">
+                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&auto=format&fit=crop&q=80" alt="Convocation" class="w-full h-full object-cover">
+            </div>
+            <div class="relative max-w-7xl mx-auto py-12 px-4 text-center text-white">
+                <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Empowering India's Youth Through Skills</h1>
+                <p class="mt-1 text-xs sm:text-sm text-gray-200">Welcome to the National Vocational Training Information Management & Verification Portal</p>
+            </div>
+        </section>
 
-                <form id="qr-form" onsubmit="generateQRCodeLink(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Roll Number / PRN</label>
-                            <input type="text" id="gen-roll" value="R190803019761" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Trainee Name</label>
-                            <input type="text" id="gen-name" value="AJAY SINGH" class="w-full border rounded px-3 py-2 text-sm uppercase focus:border-orange-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Father's Name</label>
-                            <input type="text" id="gen-father" value="MAJOR SINGH" class="w-full border rounded px-3 py-2 text-sm uppercase focus:border-orange-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Trade Name</label>
-                            <input type="text" id="gen-trade" value="Electrician (NSQF)" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Date of Birth</label>
-                            <input type="text" id="gen-dob" value="03-Jun-2001" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">ITI Name</label>
-                            <input type="text" id="gen-iti" value="Baba Farid ITI, Guru Har Sahai" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Total Marks Obtained</label>
-                            <input type="text" id="gen-marks" value="588 / 700" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Result Status</label>
-                            <select id="gen-status" class="w-full border rounded px-3 py-2 text-sm bg-white">
-                                <option value="PASS">PASS</option>
-                                <option value="REAPPEAR">REAPPEAR</option>
-                            </select>
-                        </div>
-                    </div>
+        <!-- MAIN DYNAMIC CONTENT CONTAINER -->
+        <main class="max-w-5xl mx-auto my-8 px-4">
 
-                    <button type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded text-sm transition shadow mt-4">
-                        Generate QR Code & Link 🚀
-                    </button>
-                </form>
-
-                <!-- Output QR Result Section -->
-                <div id="qr-output-box" class="mt-8 pt-6 border-t border-gray-200 hidden text-center">
-                    <h3 class="font-bold text-gray-700 text-sm mb-3">Generated QR Code for Certificate:</h3>
-                    <div id="qrcode" class="inline-block p-3 bg-white border-2 border-gray-300 rounded shadow"></div>
-                    <div class="mt-4">
-                        <p class="text-xs text-gray-500 mb-1">Direct Verification Link:</p>
-                        <input type="text" id="generated-link" readonly class="w-full bg-gray-50 border rounded p-2 text-xs text-center text-blue-600 font-mono select-all">
-                    </div>
-                    <p class="text-xs text-green-600 font-semibold mt-3">✔ ਇਸ QR ਕੋਡ ਨੂੰ ਸਕ੍ਰੀਨਸ਼ਾਟ ਲੈ ਕੇ ਜਾਂ ਸੇਵ ਕਰਕੇ ਸਰਟੀਫਿਕੇਟ ਤੇ ਲਗਾ ਲਵो!</p>
+            <!-- TAB 1: DOWNLOAD MARKSHEET FORM (Official Style matching image) -->
+            <div id="tab-download" class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                    <h2 class="text-lg font-bold text-gray-700">Download Marksheet</h2>
+                    <span class="text-xs text-blue-600 font-semibold cursor-pointer" onclick="switchTab('admin')">⚙️ Generate QR / Admin Panel</span>
                 </div>
+
+                <form onsubmit="handleViewDetails(event)" class="p-6 sm:p-8 space-y-6">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Scheme Type</label>
+                        <select class="w-full border border-gray-300 rounded px-3 py-2.5 text-sm bg-white focus:border-orange-500">
+                            <option>CTS</option>
+                            <option>CITS</option>
+                            <option>Apprenticeship</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">PRN Number / Roll Number</label>
+                        <input type="text" id="prn-input" value="R190803019761" placeholder="Enter PRN Number" class="w-full border border-gray-300 rounded px-3 py-2.5 text-sm focus:border-orange-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">DOB</label>
+                        <input type="date" id="dob-input" value="2001-06-03" class="w-full border border-gray-300 rounded px-3 py-2.5 text-sm focus:border-orange-500" required>
+                    </div>
+                    <div class="pt-2 text-center">
+                        <button type="submit" class="bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-bold px-10 py-2.5 rounded-md text-sm transition shadow-sm">
+                            VIEW DETAILS
+                        </button>
+                    </div>
+                </form>
             </div>
 
 
-            <!-- VIEW 2: VERIFICATION & MARKSHEET VIEW (Shown when QR is scanned) -->
-            <div id="verification-view" class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 sm:p-8 hidden">
+            <!-- TAB 2: VERIFICATION & MARKSHEET RESULT VIEW (Shown on scan or search) -->
+            <div id="tab-verification" class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 sm:p-8 hidden">
                 <div class="flex justify-between items-center pb-3 border-b border-gray-200 mb-6">
                     <div>
-                        <h2 class="font-bold text-blue-900 text-lg">Trainee Profile & Marksheet</h2>
+                        <h2 class="font-bold text-blue-900 text-lg">Trainee Profile & Marksheet Details</h2>
                         <p class="text-xs text-gray-500">Official Server Authenticated Record</p>
                     </div>
-                    <span class="bg-green-600 text-white text-xs px-3 py-1 rounded font-bold uppercase">Verified Success</span>
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-green-600 text-white text-xs px-3 py-1 rounded font-bold uppercase">Verified Success</span>
+                        <button onclick="switchTab('download')" class="no-print bg-gray-200 text-gray-700 text-xs px-3 py-1 rounded font-semibold hover:bg-gray-300">&laquo; Back</button>
+                    </div>
                 </div>
 
                 <!-- Profile Card -->
@@ -153,7 +163,7 @@
                                 <td class="p-2.5 border">Total Marks Obtained</td>
                                 <td class="p-2.5 border text-center">700</td>
                                 <td class="p-2.5 border text-center">-</td>
-                                <td id="val-marks" class="p-2.5 border text-center text-blue-900 text-sm"></td>
+                                <td id="val-marks" class="p-2.5 border text-center text-blue-900 text-sm">588 / 700</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -165,64 +175,133 @@
                         <p class="text-xs text-gray-700">Verification Status: <strong class="text-emerald-700">Authenticated via Server</strong></p>
                     </div>
                     <div class="mt-3 sm:mt-0 flex items-center space-x-3">
-                        <span id="val-status" class="bg-emerald-600 text-white font-extrabold px-6 py-1.5 rounded uppercase text-sm shadow"></span>
-                        <button onclick="window.print()" class="no-print bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded hover:bg-blue-800">🖨️ Print</button>
+                        <span id="val-status" class="bg-emerald-600 text-white font-extrabold px-6 py-1.5 rounded uppercase text-sm shadow">PASS</span>
+                        <button onclick="window.print()" class="no-print bg-blue-900 text-white text-xs font-bold px-4 py-2 rounded hover:bg-blue-800">🖨️ Print Marksheet</button>
                     </div>
                 </div>
+            </div>
 
-                <!-- Back to Creator -->
-                <div class="mt-6 text-center no-print">
-                    <a href="index.html" class="text-xs text-blue-600 underline font-semibold">&laquo; Create Another QR Code</a>
+
+            <!-- TAB 3: ADMIN QR CODE GENERATOR PANEL -->
+            <div id="tab-admin" class="bg-white rounded-lg shadow-lg border border-gray-200 p-6 sm:p-8 hidden">
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <h2 class="text-lg font-bold text-blue-900">Admin Panel: Create Student QR Code</h2>
+                    <button onclick="switchTab('download')" class="bg-gray-200 text-gray-700 text-xs px-3 py-1 rounded font-semibold hover:bg-gray-300">&laquo; Back to Portal</button>
+                </div>
+                <p class="text-xs text-gray-500 mb-6">ਇੱਥੇ ਸਟੂਡੈਂਟ ਦੀ ਡਿਟੇਲ ਭਰੋ ਅਤੇ QR Code ਤਿਆਰ ਕਰੋ ਤਾਂ ਜੋ ਸਰਟੀਫਿਕੇਟ ਉੱਤੇ ਲਗਾਇਆ ਜਾ ਸਕੇ।</p>
+
+                <form onsubmit="generateQRCodeLink(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Roll Number / PRN</label>
+                            <input type="text" id="gen-roll" value="R190803019761" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Trainee Name</label>
+                            <input type="text" id="gen-name" value="AJAY SINGH" class="w-full border rounded px-3 py-2 text-sm uppercase focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Father's Name</label>
+                            <input type="text" id="gen-father" value="MAJOR SINGH" class="w-full border rounded px-3 py-2 text-sm uppercase focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Trade Name</label>
+                            <input type="text" id="gen-trade" value="Electrician (NSQF)" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Date of Birth</label>
+                            <input type="text" id="gen-dob" value="03-Jun-2001" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">ITI Name</label>
+                            <input type="text" id="gen-iti" value="Baba Farid ITI, Guru Har Sahai" class="w-full border rounded px-3 py-2 text-sm focus:border-orange-500" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded text-sm transition shadow mt-4">
+                        Generate QR Code 🚀
+                    </button>
+                </form>
+
+                <!-- Output QR Result -->
+                <div id="qr-output-box" class="mt-8 pt-6 border-t border-gray-200 hidden text-center">
+                    <h3 class="font-bold text-gray-700 text-sm mb-3">Generated QR Code:</h3>
+                    <div id="qrcode" class="inline-block p-3 bg-white border-2 border-gray-300 rounded shadow"></div>
+                    <div class="mt-4">
+                        <p class="text-xs text-gray-500 mb-1">Direct Verification Link:</p>
+                        <input type="text" id="generated-link" readonly class="w-full bg-gray-50 border rounded p-2 text-xs text-center text-blue-600 font-mono select-all">
+                    </div>
+                    <p class="text-xs text-green-600 font-semibold mt-3">✔ ਇਸ QR ਕੋਡ ਦਾ ਸਕ੍ਰੀਨਸ਼ਾਟ ਲੈ ਕੇ ਸਰਟੀਫਿਕੇਟ ਤੇ ਲਗਾ ਲਵੋ!</p>
                 </div>
             </div>
 
         </main>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 text-xs py-6 px-6 text-center border-t border-gray-800 no-print">
+    <!-- Official Footer -->
+    <footer class="bg-gray-900 text-gray-400 text-xs py-6 px-6 text-center border-t border-gray-800 no-print mt-10">
         <p class="max-w-4xl mx-auto">
             Contents owned, updated and maintained by Directorate General of Training (DGT), Ministry of Skill Development & Entrepreneurship, Govt of India.
             <br>&copy; 2026 Skill India Digital Portal. All Rights Reserved.
         </p>
     </footer>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Navigation & QR Logic -->
     <script>
-        let qrInstance = null;
+        function switchTab(tabName) {
+            document.getElementById('tab-download').classList.add('hidden');
+            document.getElementById('tab-verification').classList.add('hidden');
+            document.getElementById('tab-admin').classList.add('hidden');
+            document.getElementById('hero-banner').style.display = 'block';
+
+            if(tabName === 'download') {
+                document.getElementById('tab-download').classList.remove('hidden');
+            } else if(tabName === 'verification') {
+                document.getElementById('tab-verification').classList.remove('hidden');
+                document.getElementById('hero-banner').style.display = 'none';
+            } else if(tabName === 'admin') {
+                document.getElementById('tab-admin').classList.remove('hidden');
+            } else {
+                document.getElementById('tab-download').classList.remove('hidden');
+            }
+        }
+
+        function handleViewDetails(e) {
+            e.preventDefault();
+            const prn = document.getElementById('prn-input').value.trim() || "R190803019761";
+            
+            document.getElementById('val-roll').innerText = prn;
+            document.getElementById('val-name').innerText = "AJAY SINGH";
+            document.getElementById('val-father').innerText = "MAJOR SINGH";
+            document.getElementById('val-trade').innerText = "Electrician (NSQF)";
+            document.getElementById('val-dob').innerText = "03-Jun-2001";
+            document.getElementById('val-iti').innerText = "Baba Farid ITI, Guru Har Sahai";
+            document.getElementById('val-marks').innerText = "588 / 700";
+            document.getElementById('val-status').innerText = "PASS";
+
+            switchTab('verification');
+        }
 
         function generateQRCodeLink(e) {
             e.preventDefault();
-            
-            // Collect form data
             const studentData = {
                 roll: document.getElementById('gen-roll').value.trim(),
                 name: document.getElementById('gen-name').value.trim(),
                 father: document.getElementById('gen-father').value.trim(),
                 trade: document.getElementById('gen-trade').value.trim(),
                 dob: document.getElementById('gen-dob').value.trim(),
-                iti: document.getElementById('gen-iti').value.trim(),
-                marks: document.getElementById('gen-marks').value.trim(),
-                status: document.getElementById('gen-status').value
+                iti: document.getElementById('gen-iti').value.trim()
             };
 
-            // Convert to Base64 JSON string
             const jsonString = JSON.stringify(studentData);
             const base64Data = btoa(unescape(encodeURIComponent(jsonString)));
-
-            // Build the URL
             const baseUrl = window.location.href.split('?')[0];
             const finalLink = `${baseUrl}?data=${base64Data}`;
 
-            // Show link in input
             document.getElementById('generated-link').value = finalLink;
-
-            // Clear previous QR code if any
             const qrContainer = document.getElementById('qrcode');
             qrContainer.innerHTML = "";
 
-            // Generate QR Code
-            qrInstance = new QRCode(qrContainer, {
+            new QRCode(qrContainer, {
                 text: finalLink,
                 width: 180,
                 height: 180,
@@ -232,36 +311,28 @@
             });
 
             document.getElementById('qr-output-box').classList.remove('hidden');
-            qrContainer.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // On Page Load: Check if URL has ?data= parameter
+        // On Page Load: Check if opened via QR Scan
         window.onload = function() {
             const params = new URLSearchParams(window.location.search);
             const dataParam = params.get('data');
 
             if (dataParam) {
                 try {
-                    // Decode base64 JSON data
                     const jsonString = decodeURIComponent(escape(atob(dataParam)));
                     const student = JSON.parse(jsonString);
 
-                    // Populate Verification View fields
-                    document.getElementById('val-roll').innerText = student.roll || '';
-                    document.getElementById('val-name').innerText = student.name || '';
-                    document.getElementById('val-father').innerText = student.father || '';
-                    document.getElementById('val-trade').innerText = student.trade || '';
-                    document.getElementById('val-dob').innerText = student.dob || '';
-                    document.getElementById('val-iti').innerText = student.iti || '';
-                    document.getElementById('val-marks').innerText = student.marks || '';
-                    document.getElementById('val-status').innerText = student.status || 'PASS';
+                    document.getElementById('val-roll').innerText = student.roll || 'R190803019761';
+                    document.getElementById('val-name').innerText = student.name || 'AJAY SINGH';
+                    document.getElementById('val-father').innerText = student.father || 'MAJOR SINGH';
+                    document.getElementById('val-trade').innerText = student.trade || 'Electrician (NSQF)';
+                    document.getElementById('val-dob').innerText = student.dob || '03-Jun-2001';
+                    document.getElementById('val-iti').innerText = student.iti || 'Baba Farid ITI, Guru Har Sahai';
 
-                    // Switch views
-                    document.getElementById('generator-view').classList.add('hidden');
-                    document.getElementById('verification-view').classList.remove('hidden');
-                    document.getElementById('mode-title').innerText = "Live Verification Mode";
+                    switchTab('verification');
                 } catch (err) {
-                    alert('Invalid or corrupted QR Code data!');
+                    alert('Invalid QR Data!');
                 }
             }
         };
