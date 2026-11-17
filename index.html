@@ -11,7 +11,6 @@
             background-color: #f0f2f5;
             color: #333;
         }
-        /* Government Top Header */
         .gov-header {
             background: #ffffff;
             border-bottom: 3px solid #ff9933;
@@ -32,7 +31,6 @@
             color: #ff9933;
             letter-spacing: 1px;
         }
-        /* Main Navigation Bar */
         .navbar {
             background-color: #003366;
             color: white;
@@ -40,6 +38,7 @@
             padding: 0 20px;
             list-style: none;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            flex-wrap: wrap;
         }
         .navbar li {
             padding: 12px 18px;
@@ -48,10 +47,10 @@
             cursor: pointer;
             border-right: 1px solid rgba(255,255,255,0.1);
         }
-        .navbar li:hover {
+        .navbar li:hover, .navbar li.active {
             background-color: #002244;
+            color: #ff9933;
         }
-        /* Main Container */
         .main-container {
             max-width: 900px;
             margin: 25px auto;
@@ -74,30 +73,35 @@
         .content-body {
             padding: 25px;
         }
-        /* Search Box Layout */
-        .search-box {
+        .search-box, .add-box {
             background: #f8fafc;
             border: 1px solid #cbd5e1;
             padding: 20px;
             border-radius: 6px;
             margin-bottom: 20px;
         }
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
         .form-group {
-            margin-bottom: 15px;
+            flex: 1;
+            margin-bottom: 12px;
         }
         .form-group label {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             color: #1e293b;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
         .form-group input, .form-group select {
             width: 100%;
-            padding: 9px 12px;
+            padding: 8px 10px;
             border: 1px solid #94a3b8;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 13px;
         }
         .btn-submit {
             background-color: #003366;
@@ -111,22 +115,6 @@
         }
         .btn-submit:hover {
             background-color: #002244;
-        }
-        /* Profile & Tables */
-        .profile-flex {
-            display: flex;
-            gap: 25px;
-            align-items: flex-start;
-        }
-        .profile-img-wrap {
-            text-align: center;
-        }
-        .profile-img {
-            width: 130px;
-            height: 150px;
-            border: 3px solid #003366;
-            object-fit: cover;
-            background: #e2e8f0;
         }
         .info-table, .marks-table {
             width: 100%;
@@ -183,11 +171,22 @@
             font-size: 12px;
             margin-top: 40px;
         }
+        .profile-flex {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+        }
+        .profile-img {
+            width: 130px;
+            height: 150px;
+            border: 3px solid #003366;
+            object-fit: cover;
+            background: #e2e8f0;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Top Govt Header -->
     <div class="gov-header">
         <div class="left-logo">
             Ministry of Skill Development and Entrepreneurship<br>
@@ -198,25 +197,19 @@
         </div>
     </div>
 
-    <!-- Navigation Menu -->
     <ul class="navbar">
-        <li>Home</li>
-        <li>ITI</li>
-        <li>Trainee</li>
-        <li>Verification ▼</li>
-        <li>Instructors</li>
-        <li>Graded ITIs</li>
-        <li>RTI</li>
+        <li onclick="switchTab('search')" id="tab-search" class="active">Home / Search</li>
+        <li onclick="switchTab('add')" id="tab-add">+ Add New Student (Data Entry)</li>
     </ul>
 
     <div class="main-container">
         <div class="section-header">
-            <span>NCVT MIS Trainee Verification System</span>
+            <span id="panel-title">NCVT MIS Trainee Verification System</span>
             <span style="font-size: 12px; font-weight: normal;">Ver. 4.5.2</span>
         </div>
         
         <div class="content-body" id="portal-content">
-            <!-- Dynamic Content Will Load Here -->
+            <!-- Dynamic Content -->
         </div>
     </div>
 
@@ -225,8 +218,8 @@
     </footer>
 
     <script>
-        // ਸਟੂਡੈਂਟਸ ਦਾ ਡਾਟਾ (ਇੱਥੇ ਤੁਸੀਂ ਜਿੰਨੇ ਮਰਜ਼ੀ ਸਟੂਡੈਂਟਸ ਜੋੜ ਸਕਦੇ ਹੋ)
-        const students = {
+        // ਡਿਫਾਲਟ ਸਟੂਡੈਂਟ ਡਾਟਾ
+        let defaultStudents = {
             "ITI2026001": {
                 rollNo: "R19083019761",
                 name: "AJAY SINGH",
@@ -236,13 +229,13 @@
                 admissionYear: "2019",
                 dob: "03-Jun-2001",
                 itiCode: "GR03000313",
-                itiName: "Government / Private ITI Center",
+                itiName: "Private ITI Center",
                 shift: "1",
                 unit: "2",
                 reappear: "No",
                 resultDate: "26-Feb-2022",
                 result: "PASSED",
-                photo: "https://via.placeholder.com/130x150?text=Photo", // ਇੱਥੇ ਅਸਲੀ ਫੋਟੋ ਦਾ ਲਿੰਕ ਪਾ ਸਕਦੇ ਹੋ
+                photo: "https://via.placeholder.com/130x150?text=Photo",
                 marks: [
                     {subject: "Trade Theory", max: 100, min: 33, obtained: 78},
                     {subject: "Employability Skills", max: 50, min: 17, obtained: 42},
@@ -251,124 +244,231 @@
                     {subject: "Trade Practical", max: 250, min: 150, obtained: 215},
                     {subject: "Formative Assessment", max: 200, min: 120, obtained: 180}
                 ]
-            },
-            "ITI2026002": {
-                rollNo: "R19083019762",
-                name: "RAHUL SHARMA",
-                fatherName: "VIJAY KUMAR",
-                tradeCode: "442",
-                tradeName: "Electrician (NSQF)",
-                admissionYear: "2019",
-                dob: "15-Aug-2000",
-                itiCode: "GR03000313",
-                itiName: "Government / Private ITI Center",
-                shift: "1",
-                unit: "2",
-                reappear: "No",
-                resultDate: "26-Feb-2022",
-                result: "PASSED",
-                photo: "https://via.placeholder.com/130x150?text=Photo",
-                marks: [
-                    {subject: "Trade Theory", max: 100, min: 33, obtained: 85},
-                    {subject: "Employability Skills", max: 50, min: 17, obtained: 40},
-                    {subject: "Workshop Calculation & Science", max: 50, min: 17, obtained: 42},
-                    {subject: "Engineering Drawing", max: 50, min: 17, obtained: 48},
-                    {subject: "Trade Practical", max: 250, min: 150, obtained: 230},
-                    {subject: "Formative Assessment", max: 200, min: 120, obtained: 190}
-                ]
             }
         };
 
+        // LocalStorage ਤੋਂ ਸਟੂਡੈਂਟ ਲੋਡ ਕਰੋ
+        function getAllStudents() {
+            let saved = localStorage.getItem('ncvt_students');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            return defaultStudents;
+        }
+
+        function saveAllStudents(data) {
+            localStorage.setItem('ncvt_students', JSON.stringify(data));
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         const studentId = urlParams.get('id');
+        const actionTab = urlParams.get('tab');
         const container = document.getElementById('portal-content');
 
-        // ਜੇ ਯੂਜ਼ਰ ਨੇ QR ਸਕੈਨ ਕੀਤਾ ਹੈ ਅਤੇ ID ਮੌਜੂਦ ਹੈ
-        if (studentId && students[studentId]) {
+        if (studentId) {
+            let students = getAllStudents();
             const s = students[studentId];
-            let marksRows = '';
-            let totalMax = 0, totalObtained = 0;
-            
-            s.marks.forEach(m => {
-                totalMax += m.max;
-                totalObtained += m.obtained;
-                marksRows += `<tr><td>${m.subject}</td><td>${m.max}</td><td>${m.min}</td><td><b>${m.obtained}</b></td></tr>`;
-            });
+            if (s) {
+                let marksRows = '';
+                let totalMax = 0, totalObtained = 0;
+                s.marks.forEach(m => {
+                    totalMax += m.max;
+                    totalObtained += m.obtained;
+                    marksRows += `<tr><td>${m.subject}</td><td>${m.max}</td><td>${m.min}</td><td><b>${m.obtained}</b></td></tr>`;
+                });
 
-            container.innerHTML = `
-                <a href="index.html" class="back-btn">← Back to Search Portal</a>
-                <h3 style="color: #003366; margin-bottom: 15px; border-bottom: 2px solid #003366; padding-bottom: 5px;">Trainee Profile Verification</h3>
-                
-                <div class="profile-flex">
-                    <div class="profile-img-wrap">
-                        <img src="${s.photo}" class="profile-img" alt="Trainee Photo">
-                        <div style="font-size: 11px; margin-top: 5px; color: #64748b; font-weight: bold;">Verified Record</div>
+                container.innerHTML = `
+                    <a href="index.html" class="back-btn">← Back to Search Portal</a>
+                    <h3 style="color: #003366; margin-bottom: 15px; border-bottom: 2px solid #003366; padding-bottom: 5px;">Trainee Profile Verification</h3>
+                    
+                    <div class="profile-flex">
+                        <div style="text-align: center;">
+                            <img src="${s.photo}" class="profile-img" alt="Photo">
+                            <div style="font-size: 11px; margin-top: 5px; color: #166534; font-weight: bold;">✔ Verified Record</div>
+                        </div>
+                        <div style="flex-grow: 1;">
+                            <table class="info-table">
+                                <tr><td>Roll Number / Reg No</td><td>${s.rollNo}</td></tr>
+                                <tr><td>Trainee Name</td><td>${s.name}</td></tr>
+                                <tr><td>Father's Name</td><td>${s.fatherName}</td></tr>
+                                <tr><td>Trade Code & Name</td><td>${s.tradeCode} - ${s.tradeName}</td></tr>
+                                <tr><td>Admission Year</td><td>${s.admissionYear}</td></tr>
+                                <tr><td>Date of Birth</td><td>${s.dob}</td></tr>
+                                <tr><td>ITI Code & Name</td><td>${s.itiCode} - ${s.itiName}</td></tr>
+                                <tr><td>Shift / Unit</td><td>Shift ${s.shift}, Unit ${s.unit}</td></tr>
+                                <tr><td>Eligible to Reappear</td><td>${s.reappear}</td></tr>
+                            </table>
+                        </div>
                     </div>
-                    <div style="flex-grow: 1;">
-                        <table class="info-table">
-                            <tr><td>Roll Number / Reg No</td><td>${s.rollNo}</td></tr>
-                            <tr><td>Trainee Name</td><td>${s.name}</td></tr>
-                            <tr><td>Father's / Guardian's Name</td><td>${s.fatherName}</td></tr>
-                            <tr><td>Trade Code</td><td>${s.tradeCode}</td></tr>
-                            <tr><td>Trade Name</td><td>${s.tradeName}</td></tr>
-                            <tr><td>Admission Year</td><td>${s.admissionYear}</td></tr>
-                            <tr><td>Date of Birth</td><td>${s.dob}</td></tr>
-                            <tr><td>ITI Code</td><td>${s.itiCode}</td></tr>
-                            <tr><td>ITI Name</td><td>${s.itiName}</td></tr>
-                            <tr><td>Shift / Unit</td><td>Shift ${s.shift}, Unit ${s.unit}</td></tr>
-                            <tr><td>Eligible to Reappear</td><td>${s.reappear}</td></tr>
-                        </table>
+
+                    <h3 style="color: #003366; margin-top: 25px; margin-bottom: 10px;">Mark Sheet Details</h3>
+                    <table class="marks-table">
+                        <tr><th>Subject Name</th><th>Max Marks</th><th>Min Pass</th><th>Obtained</th></tr>
+                        ${marksRows}
+                        <tr><td style="text-align: left;"><b>Total Aggregate</b></td><td><b>${totalMax}</b></td><td>-</td><td><b>${totalObtained}</b></td></tr>
+                    </table>
+
+                    <div class="result-box">
+                        RESULT DATE: ${s.resultDate} &nbsp;|&nbsp; STATUS: <span style="color: #15803d;">${s.result}</span>
                     </div>
-                </div>
-
-                <h3 style="color: #003366; margin-top: 25px; margin-bottom: 10px;">Mark Sheet Details</h3>
-                <table class="marks-table">
-                    <tr>
-                        <th>Subject Name</th>
-                        <th>Max Marks</th>
-                        <th>Min Pass Marks</th>
-                        <th>Marks Obtained</th>
-                    </tr>
-                    ${marksRows}
-                    <tr>
-                        <td style="text-align: left;"><b>Total Aggregate</b></td>
-                        <td><b>${totalMax}</b></td>
-                        <td>-</td>
-                        <td><b>${totalObtained}</b></td>
-                    </tr>
-                </table>
-
-                <div class="result-box">
-                    RESULT GENERATION DATE: ${s.resultDate} &nbsp;|&nbsp; 
-                    FINAL STATUS: <span style="color: #15803d; font-size: 16px;">${s.result}</span>
-                </div>
-            `;
+                `;
+            } else {
+                container.innerHTML = `<div style="text-align:center; color:red; padding:30px; font-weight:bold;">⚠️ Record not found for ID: ${studentId}</div><a href="index.html" class="back-btn">← Back</a>`;
+            }
+        } else if (actionTab === 'add') {
+            renderAddForm();
+            document.getElementById('tab-add').classList.add('active');
+            document.getElementById('tab-search').classList.remove('active');
         } else {
-            // ਜੇ ਸਿੱਧਾ ਲਿੰਕ ਖੋਲ੍ਹਿਆ ਹੈ ਤਾਂ ਸਰਚ ਪੇਜ ਦਿਖਾਓ
+            renderSearchBox();
+        }
+
+        function switchTab(tab) {
+            if (tab === 'search') {
+                window.location.href = 'index.html';
+            } else {
+                window.location.href = 'index.html?tab=add';
+            }
+        }
+
+        function renderSearchBox() {
             container.innerHTML = `
                 <div class="search-box">
                     <h3 style="color: #003366; margin-bottom: 15px; font-size: 15px;">Search Trainee / Certificate Verification</h3>
                     <div class="form-group">
-                        <label>Enter Registration Number / Roll Number:</label>
+                        <label>Enter Registration Number / Unique ID:</label>
                         <input type="text" id="searchIdInput" placeholder="e.g. ITI2026001 or R19083019761">
                     </div>
                     <button class="btn-submit" onclick="searchStudent()">Search Record</button>
                 </div>
                 <div style="font-size: 13px; color: #64748b; line-height: 1.6;">
                     <b>Instructions:</b><br>
-                    1. Scan the QR code printed on the Certificate or Marksheet to instantly view verified candidate details.<br>
-                    2. Alternatively, enter the unique ID/Roll Number above to test the verification system.
+                    1. Scan the QR code printed on the Certificate or Marksheet to instantly view candidate details.<br>
+                    2. Click on <b>+ Add New Student (Data Entry)</b> above to add new student records directly into the portal.
+                </div>
+            `;
+        }
+
+        function renderAddForm() {
+            container.innerHTML = `
+                <div class="add-box">
+                    <h3 style="color: #003366; margin-bottom: 15px; font-size: 16px;">Add New Trainee Record</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Unique ID / Key (e.g. ITI2026002):</label>
+                            <input type="text" id="inp_id" placeholder="ITI2026002">
+                        </div>
+                        <div class="form-group">
+                            <label>Roll Number / Reg No:</label>
+                            <input type="text" id="inp_roll" placeholder="R19083019762">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Trainee Name:</label>
+                            <input type="text" id="inp_name" placeholder="RAHUL KUMAR">
+                        </div>
+                        <div class="form-group">
+                            <label>Father's Name:</label>
+                            <input type="text" id="inp_fname" placeholder="SATPAL SINGH">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Trade Name:</label>
+                            <input type="text" id="inp_trade" value="Electrician (NSQF)">
+                        </div>
+                        <div class="form-group">
+                            <label>Trade Code:</label>
+                            <input type="text" id="inp_tcode" value="442">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Admission Year / DOB:</label>
+                            <input type="text" id="inp_dob" value="2019 / 15-Aug-2000">
+                        </div>
+                        <div class="form-group">
+                            <label>ITI Name & Code:</label>
+                            <input type="text" id="inp_iti" value="Private ITI Center (GR03000313)">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Photo Image Link (URL):</label>
+                            <input type="text" id="inp_photo" placeholder="https://via.placeholder.com/130x150">
+                        </div>
+                        <div class="form-group">
+                            <label>Total Marks Obtained (Out of 700):</label>
+                            <input type="number" id="inp_marks" value="599">
+                        </div>
+                    </div>
+                    <button class="btn-submit" onclick="addNewStudent()">Save & Generate QR Link</button>
                 </div>
             `;
         }
 
         function searchStudent() {
             let val = document.getElementById('searchIdInput').value.trim();
+            let students = getAllStudents();
             if (students[val]) {
                 window.location.href = 'index.html?id=' + val;
             } else {
-                alert('No record found for this ID! Please check and try again.');
+                alert('No record found for this ID! Please check.');
             }
+        }
+
+        function addNewStudent() {
+            let idKey = document.getElementById('inp_id').value.trim();
+            let roll = document.getElementById('inp_roll').value.trim();
+            let name = document.getElementById('inp_name').value.trim();
+            let fname = document.getElementById('inp_fname').value.trim();
+            let trade = document.getElementById('inp_trade').value.trim();
+            let tcode = document.getElementById('inp_tcode').value.trim();
+            let dob = document.getElementById('inp_dob').value.trim();
+            let iti = document.getElementById('inp_iti').value.trim();
+            let photo = document.getElementById('inp_photo').value.trim() || "https://via.placeholder.com/130x150?text=Photo";
+            let obtMarks = parseInt(document.getElementById('inp_marks').value) || 500;
+
+            if (!idKey || !roll || !name) {
+                alert('ਕਿਰਪਾ ਕਰਕੇ ID, Roll No ਅਤੇ Name ਜ਼ਰੂਰ ਭਰੋ!');
+                return;
+            }
+
+            let students = getAllStudents();
+            students[idKey] = {
+                rollNo: roll,
+                name: name,
+                fatherName: fname,
+                tradeCode: tcode,
+                tradeName: trade,
+                admissionYear: "2019",
+                dob: dob,
+                itiCode: "GR03000313",
+                itiName: iti,
+                shift: "1",
+                unit: "2",
+                reappear: "No",
+                resultDate: "26-Feb-2022",
+                result: "PASSED",
+                photo: photo,
+                marks: [
+                    {subject: "Trade Theory", max: 100, min: 33, obtained: Math.round(obtMarks * 0.2)},
+                    {subject: "Employability Skills", max: 50, min: 17, obtained: Math.round(obtMarks * 0.1)},
+                    {subject: "Workshop Calculation & Science", max: 50, min: 17, obtained: Math.round(obtMarks * 0.1)},
+                    {subject: "Engineering Drawing", max: 50, min: 17, obtained: Math.round(obtMarks * 0.1)},
+                    {subject: "Trade Practical", max: 250, min: 150, obtained: Math.round(obtMarks * 0.35)},
+                    {subject: "Formative Assessment", max: 200, min: 120, obtained: Math.round(obtMarks * 0.15)}
+                ]
+            };
+
+            saveAllStudents(students);
+
+            let currentURL = window.location.href.split('?')[0];
+            let traineeLink = currentURL + '?id=' + idKey;
+
+            alert('ਸਟੂਡੈਂਟ ਸਫਲਤਾਪੂਰਵਕ ਸੇਵ ਹੋ ਗਿਆ ਹੈ!\n\nਇਸ ਸਟੂਡੈਂਟ ਦਾ QR ਲਿੰਕ ਇਹ ਬਣਿਆ ਹੈ:\n' + traineeLink);
+            window.location.href = 'index.html?id=' + idKey;
         }
     </script>
 </body>
